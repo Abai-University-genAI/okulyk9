@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Информатика 9 | Электрондық оқулық</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--p:#4f46e5;--pd:#3730a3;--s:#06b6d4;--a:#f59e0b;--ok:#10b981;--err:#ef4444;--bg:#f0f4ff;--w:#fff;--t:#1e1b4b;--tm:#6b7280;--bd:#e0e7ff;--sh:0 20px 60px -10px rgba(79,70,229,.15);--r:20px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color:var(--t);background-image:radial-gradient(circle at 20% 20%,rgba(79,70,229,.07) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(6,182,212,.07) 0%,transparent 50%)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse2{0%,100%{opacity:1}50%{opacity:.5}}
+.fade-up{animation:fadeUp .5s ease forwards}
+.float-anim{animation:float 3s ease-in-out infinite}
+.page{display:none}
+.page.active{display:block;animation:fadeUp .5s ease}
+#app{max-width:960px;margin:0 auto;padding-bottom:100px}
+
+/* SCORE BAR */
+.gsbar{background:linear-gradient(135deg,var(--pd),var(--p));color:#fff;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;font-weight:700;position:sticky;top:0;z-index:500;box-shadow:0 4px 20px rgba(79,70,229,.3);flex-wrap:wrap}
+.gsbrand{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:900}
+.gspill{background:rgba(255,255,255,.2);padding:6px 16px;border-radius:20px;font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px;white-space:nowrap}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:50px;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;border:none;cursor:pointer;transition:all .3s ease;text-decoration:none}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--s));color:#fff;box-shadow:0 8px 20px rgba(79,70,229,.35)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(79,70,229,.45)}
+.btn-o{background:transparent;border:2px solid var(--p);color:var(--p);font-family:'Nunito',sans-serif;font-weight:800}
+.btn-o:hover{background:var(--p);color:#fff}
+.btn-back{background:#fff;color:var(--p);border:2px solid var(--bd);box-shadow:0 4px 12px rgba(0,0,0,.07);font-family:'Nunito',sans-serif;font-weight:800}
+.btn-back:hover{border-color:var(--p);transform:translateY(-2px)}
+.btn-sm{padding:9px 20px;font-size:13px}
+.btn-xs{padding:7px 14px;font-size:12px;border-radius:30px}
+
+/* CARDS */
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--bd)}
+.card-h{transition:all .3s ease;cursor:pointer}
+.card-h:hover{transform:translateY(-5px);box-shadow:0 28px 70px -10px rgba(79,70,229,.22)}
+
+/* PAGE HEADER */
+.phdr{display:flex;align-items:center;justify-content:space-between;padding:28px 24px 0;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+.ptitle{font-size:24px;font-weight:900;color:var(--t)}
+
+/* TABS */
+.tabs{display:flex;gap:5px;background:#f1f5f9;padding:5px;border-radius:14px;margin:0 24px 24px;flex-wrap:wrap}
+.tabb{padding:10px 18px;border-radius:10px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:var(--tm);cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:6px}
+.tabb.active{background:#fff;color:var(--p);box-shadow:0 4px 12px rgba(79,70,229,.14)}
+
+/* TOPIC CARDS */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;padding:0 24px}
+.tcard{background:#fff;border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;border:2px solid transparent;box-shadow:0 4px 14px rgba(0,0,0,.06);transition:all .3s;cursor:pointer;text-align:left;width:100%;font-family:'Nunito',sans-serif}
+.tcard:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(79,70,229,.18);border-color:var(--p)}
+.ticon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.tname{font-size:14px;font-weight:800;color:var(--t)}
+.tdesc{font-size:11px;color:var(--tm);margin-top:2px;font-weight:600}
+.tscore{margin-left:auto;font-size:11px;font-weight:800;padding:4px 10px;border-radius:16px;background:#f0fdf4;color:var(--ok);white-space:nowrap;flex-shrink:0}
+
+/* SCORE BANNER */
+.sbanner{background:linear-gradient(135deg,var(--p),var(--s));border-radius:18px;padding:18px 24px;color:#fff;display:flex;align-items:center;justify-content:space-between;margin:0 24px 20px;flex-wrap:wrap;gap:14px}
+.sb-num{font-size:32px;font-weight:900;line-height:1}
+.sb-lbl{font-size:12px;opacity:.8;font-weight:700}
+.sb-badge{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(255,255,255,.2);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);white-space:nowrap}
+
+/* SECTION LABEL */
+.slbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--tm);margin:22px 24px 12px;display:block}
+
+/* INFO BOXES */
+.ibox{border-radius:13px;padding:16px;margin:14px 0;border-left:4px solid;font-size:13px;font-weight:600;line-height:1.6}
+.ibox.blue{background:#eff6ff;border-color:#3b82f6;color:#1e40af}
+.ibox.green{background:#f0fdf4;border-color:#22c55e;color:#166534}
+.ibox.yellow{background:#fffbeb;border-color:#f59e0b;color:#92400e}
+.ibox.red{background:#fef2f2;border-color:#ef4444;color:#991b1b}
+.ibox.purple{background:#faf5ff;border-color:#a855f7;color:#6b21a8}
+
+/* CODE BLOCK */
+.code-block{background:#0f172a;border-radius:13px;padding:18px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#94a3b8;margin:16px 0;border:1px solid #1e293b;overflow-x:auto}
+.kw{color:#818cf8}.str{color:#86efac}.cmt{color:#475569;font-style:italic}.num{color:#fb923c}.fn{color:#67e8f9}
+
+/* HERO IMAGE */
+.theory-hero{position:relative;border-radius:18px;overflow:hidden;margin-bottom:22px;height:260px}
+.theory-hero img{width:100%;height:100%;object-fit:cover}
+.theory-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(79,70,229,.85) 0%,transparent 65%);display:flex;align-items:center;padding:28px}
+.theory-overlay-text{color:#fff;max-width:55%}
+.theory-overlay-text h1{font-size:26px;font-weight:900;margin-bottom:6px;line-height:1.2}
+.theory-overlay-text p{font-size:13px;opacity:.9;font-weight:600}
+
+/* VIDEO */
+.vwrap{border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(79,70,229,.2);margin-bottom:18px;position:relative;padding-bottom:56.25%;height:0}
+.vwrap iframe{position:absolute;top:0;left:0;width:100%;height:100%}
+
+/* LEVEL TABS */
+.lvl-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.lvl-tab{padding:10px 22px;border-radius:50px;border:2px solid;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;cursor:pointer;transition:all .3s}
+.lvl-tab.l1{border-color:#22c55e;color:#16a34a;background:#f0fdf4}.lvl-tab.l1.active,.lvl-tab.l1:hover{background:#22c55e;color:#fff}
+.lvl-tab.l2{border-color:#f59e0b;color:#d97706;background:#fffbeb}.lvl-tab.l2.active,.lvl-tab.l2:hover{background:#f59e0b;color:#fff}
+.lvl-tab.l3{border-color:#ef4444;color:#dc2626;background:#fef2f2}.lvl-tab.l3.active,.lvl-tab.l3:hover{background:#ef4444;color:#fff}
+.lvl-content{display:none}.lvl-content.active{display:block;animation:fadeUp .4s ease}
+.task-card{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;border:2px solid var(--bd);box-shadow:0 4px 12px rgba(0,0,0,.04)}
+.task-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.task-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0}
+.task-title{font-weight:800;font-size:15px}
+.task-body{color:var(--tm);font-size:13px;line-height:1.7;font-weight:600}
+.task-pts{display:inline-block;margin-top:8px;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:800}
+
+/* TEST */
+.tq{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;border:2px solid var(--bd);box-shadow:0 4px 12px rgba(0,0,0,.04);transition:all .3s}
+.tq.correct{border-color:var(--ok);background:#f0fdf4}
+.tq.wrong{border-color:var(--err);background:#fef2f2}
+.tq-txt{font-size:16px;font-weight:800;margin-bottom:14px}
+.opt{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:11px;border:2px solid #e5e7eb;margin-bottom:9px;cursor:pointer;transition:all .25s;font-weight:700;font-size:13px;background:#fff}
+.opt:hover{border-color:var(--p);background:#eff6ff}
+.opt input{accent-color:var(--p);width:17px;height:17px}
+.res-box{background:linear-gradient(135deg,#ede9fe,#dbeafe);border-radius:16px;padding:28px;text-align:center;margin-top:22px}
+.res-big{font-size:52px;font-weight:900;color:var(--p);line-height:1}
+.pbar{height:11px;background:#e0e7ff;border-radius:6px;overflow:hidden;margin:14px 0}
+.pfill{height:100%;background:linear-gradient(to right,var(--p),var(--s));border-radius:6px;transition:width .8s ease}
+
+/* QMZh */
+.qmzh-tbl{width:100%;border-collapse:collapse;font-size:13px;border-radius:12px;overflow:hidden}
+.qmzh-tbl th{background:linear-gradient(135deg,var(--p),var(--s));color:#fff;padding:13px;font-weight:800;font-size:12px}
+.qmzh-tbl td{padding:11px;border:1px solid #e5e7eb;vertical-align:top;line-height:1.6}
+.qmzh-tbl tr:nth-child(even) td{background:#f8faff}
+
+/* GAME CARDS */
+.game-card{border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.09);margin-bottom:22px}
+.game-hdr{padding:15px 22px;font-weight:800;font-size:15px;display:flex;align-items:center;gap:10px}
+.game-body{padding:22px;background:#fff}
+
+/* MATCHING GAME */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.match-item{padding:12px 14px;border-radius:11px;border:2px solid var(--bd);cursor:pointer;font-weight:700;font-size:13px;text-align:center;transition:all .25s;user-select:none;background:#fff}
+.match-item:hover{border-color:var(--p);background:#eff6ff}
+.match-item.sel{border-color:var(--p);background:var(--p);color:#fff}
+.match-item.matched{border-color:var(--ok);background:#dcfce7;color:#166534;cursor:default}
+.match-item.err{border-color:var(--err);background:#fee2e2;animation:shake .4s ease}
+
+/* TYPING GAME */
+.typing-disp{background:#f8faff;border-radius:12px;padding:16px;font-family:'JetBrains Mono',monospace;font-size:17px;letter-spacing:1px;text-align:center;margin-bottom:14px;border:2px solid var(--bd);line-height:2;word-break:break-all}
+.char.ok{color:var(--ok)}.char.err2{color:var(--err);background:#fee2e2;border-radius:3px}.char.cur{background:var(--p);color:#fff;border-radius:3px}
+.typing-inp{width:100%;padding:13px 16px;border-radius:11px;border:2px solid var(--bd);font-family:'JetBrains Mono',monospace;font-size:15px;outline:none;transition:border .25s}
+.typing-inp:focus{border-color:var(--p)}
+
+/* DRAG DROP */
+.drag-chip{padding:9px 17px;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;border-radius:50px;font-weight:700;font-size:13px;cursor:grab;user-select:none;box-shadow:0 4px 12px rgba(79,70,229,.3);transition:all .2s}
+.drag-chip:active{cursor:grabbing;opacity:.8}
+.drag-chip.used{opacity:.3;pointer-events:none}
+.drop-zone{border:2px dashed #cbd5e1;border-radius:11px;padding:11px 14px;min-height:48px;display:flex;align-items:center;gap:8px;margin-bottom:10px;transition:all .25s;font-size:13px;font-weight:700}
+.drop-zone.over{border-color:var(--p);background:#eff6ff}
+.drop-zone.filled{border-color:var(--ok);background:#f0fdf4}
+.dropped-chip{background:var(--ok);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer}
+
+/* QUICK QUIZ */
+.qq-opt{padding:13px 16px;border-radius:12px;border:2px solid var(--bd);font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all .25s;background:#fff;text-align:left}
+.qq-opt:hover{border-color:var(--p);background:#eff6ff}
+.qq-opt.correct{border-color:var(--ok);background:#dcfce7;color:#166534}
+.qq-opt.wrong{border-color:var(--err);background:#fee2e2;color:#991b1b}
+
+/* MEMORY GAME */
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:420px;margin:0 auto}
+.mem-card{aspect-ratio:1;border-radius:12px;cursor:pointer;position:relative;transform-style:preserve-3d;transition:transform .5s}
+.mem-card.flipped,.mem-card.matched{transform:rotateY(180deg)}
+.mem-front,.mem-back{position:absolute;inset:0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;backface-visibility:hidden}
+.mem-front{background:linear-gradient(135deg,var(--p),var(--s));color:#fff}
+.mem-back{background:#fff;border:2px solid var(--bd);transform:rotateY(180deg)}
+.mem-card.matched .mem-back{border-color:var(--ok);background:#f0fdf4}
+
+/* WORDSEARCH */
+.ws-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;max-width:360px;margin:0 auto}
+.ws-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;background:#f1f5f9;border:1px solid #e2e8f0}
+.ws-cell:hover{background:#ede9fe}
+.ws-cell.sel{background:var(--p);color:#fff}
+.ws-cell.found{background:var(--ok);color:#fff}
+
+/* CHATBOT */
+.chat-wrap{background:#fff;border-radius:22px;overflow:hidden;box-shadow:var(--sh);border:1px solid var(--bd);display:flex;flex-direction:column;height:68vh;min-height:480px}
+.chat-hdr{background:linear-gradient(135deg,var(--p),var(--s));padding:18px 22px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.chat-av{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid rgba(255,255,255,.4);flex-shrink:0}
+.chat-msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+.chat-msgs::-webkit-scrollbar{width:3px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+.msg{display:flex;gap:9px;animation:fadeUp .3s ease}
+.msg.user{flex-direction:row-reverse}
+.mbubble{max-width:76%;padding:11px 15px;border-radius:17px;font-size:14px;font-weight:600;line-height:1.5}
+.msg.bot .mbubble{background:#f1f5f9;color:var(--t);border-bottom-left-radius:4px}
+.msg.user .mbubble{background:linear-gradient(135deg,var(--p),var(--s));color:#fff;border-bottom-right-radius:4px}
+.mav{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px}
+.msg.bot .mav{background:linear-gradient(135deg,var(--p),var(--s))}
+.msg.user .mav{background:#e5e7eb}
+.typing-dots{display:flex;gap:4px;align-items:center;padding:11px 15px;background:#f1f5f9;border-radius:17px;border-bottom-left-radius:4px;width:fit-content}
+.tdot{width:7px;height:7px;background:#94a3b8;border-radius:50%}
+.tdot:nth-child(1){animation:bounce 1.2s ease-in-out infinite 0s}
+.tdot:nth-child(2){animation:bounce 1.2s ease-in-out infinite .2s}
+.tdot:nth-child(3){animation:bounce 1.2s ease-in-out infinite .4s}
+.chat-inp-area{padding:14px 18px;border-top:1px solid var(--bd);display:flex;gap:10px;align-items:center;background:#fafbff;flex-shrink:0}
+.chat-inp{flex:1;padding:11px 17px;border-radius:50px;border:2px solid var(--bd);font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border .25s;background:#fff}
+.chat-inp:focus{border-color:var(--p)}
+.chat-send{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:all .3s;box-shadow:0 4px 14px rgba(79,70,229,.4);flex-shrink:0}
+.chat-send:hover{transform:scale(1.08)}
+.qreplies{display:flex;flex-wrap:wrap;gap:7px;padding:10px 18px;border-top:1px solid var(--bd);background:#fafbff;flex-shrink:0}
+.qr{padding:7px 14px;border-radius:50px;border:2px solid var(--bd);background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;color:var(--p);cursor:pointer;transition:all .25s}
+.qr:hover{background:var(--p);color:#fff;border-color:var(--p)}
+
+/* FLOATING NAV */
+.fnav{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#fff;border-radius:50px;padding:9px 18px;display:flex;gap:4px;box-shadow:0 20px 60px rgba(79,70,229,.25);border:1px solid var(--bd);z-index:1000}
+.fnav-btn{padding:9px 16px;border-radius:40px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:var(--tm);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .3s;white-space:nowrap}
+.fnav-btn:hover,.fnav-btn.active{background:linear-gradient(135deg,var(--p),var(--s));color:#fff}
+.fnav-btn i{font-size:13px}
+@media(max-width:600px){.fnav-btn span{display:none}.match-cols{grid-template-columns:1fr}.mem-grid{grid-template-columns:repeat(4,1fr)}.tgrid{grid-template-columns:1fr}}
+@media print{.fnav,.gsbar,.btn-back,.no-print{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<!-- GLOBAL SCORE BAR -->
+<div class="gsbar">
+  <div class="gsbrand"><i class="fas fa-graduation-cap"></i> Информатика 9</div>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    <div class="gspill"><i class="fas fa-star" style="color:#fbbf24"></i><span id="g-score">0</span> ұпай</div>
+    <div class="gspill" style="background:rgba(255,255,255,.15)"><i class="fas fa-trophy" style="color:#fbbf24"></i><span id="g-lvl">Жаңадан бастаушы</span></div>
+  </div>
+</div>
+
+<div id="app">
+
+<!-- ======================================================
+     COVER PAGE
+====================================================== -->
+<div id="cover-page" class="page active" style="padding:40px 24px;text-align:center">
+  <div style="max-width:680px;margin:0 auto">
+    <div class="float-anim" style="position:relative;width:200px;height:200px;margin:0 auto 36px">
+      <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+           style="width:200px;height:200px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 20px 60px rgba(79,70,229,.4)">
+      <div style="position:absolute;bottom:8px;right:8px;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;border:3px solid #fff;box-shadow:0 8px 20px rgba(245,158,11,.4);animation:bounce 2s ease-in-out infinite">9</div>
+    </div>
+    <div style="font-size:58px;font-weight:900;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;letter-spacing:-2px;margin-bottom:10px">ИНФОРМАТИКА</div>
+    <div style="font-size:19px;color:var(--tm);margin-bottom:24px;font-weight:700">Электрондық оқулық · 2024–2025</div>
+    <div style="display:inline-block;background:linear-gradient(135deg,#ede9fe,#dbeafe);color:var(--p);padding:11px 26px;border-radius:50px;font-weight:800;font-size:15px;margin-bottom:36px;border:2px solid var(--bd)">
+      <i class="fas fa-code" style="margin-right:8px"></i>Бағдарламалау · Алгоритмдер · Дерекқор
+    </div>
+    <div style="display:flex;justify-content:center;gap:20px;margin-bottom:30px;flex-wrap:wrap">
+      <div style="background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 8px 24px rgba(79,70,229,.12);border:1px solid var(--bd);text-align:center"><div style="font-size:26px;font-weight:900;color:var(--p)">8</div><div style="font-size:11px;color:var(--tm);font-weight:700">Тақырып</div></div>
+      <div style="background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 8px 24px rgba(79,70,229,.12);border:1px solid var(--bd);text-align:center"><div style="font-size:26px;font-weight:900;color:var(--p)">8</div><div style="font-size:11px;color:var(--tm);font-weight:700">Ойын</div></div>
+      <div style="background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 8px 24px rgba(79,70,229,.12);border:1px solid var(--bd);text-align:center"><div style="font-size:26px;font-weight:900;color:var(--p)">3</div><div style="font-size:11px;color:var(--tm);font-weight:700">Деңгей</div></div>
+      <div style="background:#fff;padding:14px 20px;border-radius:16px;box-shadow:0 8px 24px rgba(79,70,229,.12);border:1px solid var(--bd);text-align:center"><div style="font-size:26px;font-weight:900;color:var(--p)">AI</div><div style="font-size:11px;color:var(--tm);font-weight:700">Көмекші</div></div>
+    </div>
+    <button onclick="nav('toc-page','nav-toc')" class="btn btn-p" style="font-size:18px;padding:16px 48px">
+      <i class="fas fa-rocket"></i> БАСТАУ
+    </button>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:28px">
+      <span style="background:#fff;border:2px solid var(--bd);padding:7px 17px;border-radius:50px;font-size:12px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.05)"><i class="fas fa-video" style="color:var(--err);margin-right:5px"></i>Бейне сабақтар</span>
+      <span style="background:#fff;border:2px solid var(--bd);padding:7px 17px;border-radius:50px;font-size:12px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.05)"><i class="fas fa-gamepad" style="color:var(--p);margin-right:5px"></i>8 Ойын</span>
+      <span style="background:#fff;border:2px solid var(--bd);padding:7px 17px;border-radius:50px;font-size:12px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.05)"><i class="fas fa-robot" style="color:var(--ok);margin-right:5px"></i>AI Чат-бот</span>
+      <span style="background:#fff;border:2px solid var(--bd);padding:7px 17px;border-radius:50px;font-size:12px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.05)"><i class="fas fa-layer-group" style="color:var(--a);margin-right:5px"></i>Деңгейлік тапсырмалар</span>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================
+     TOC PAGE
+====================================================== -->
+<div id="toc-page" class="page">
+  <div class="phdr">
+    <div class="ptitle">📚 Тақырыптар</div>
+    <button onclick="nav('cover-page','')" class="btn btn-back btn-sm"><i class="fas fa-home"></i> Басты бет</button>
+  </div>
+  <div class="sbanner">
+    <div><div class="sb-lbl">Жалпы ұпай</div><div class="sb-num" id="toc-sc">0</div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div class="sb-badge"><i class="fas fa-trophy"></i> <span id="toc-lv">Жаңадан бастаушы</span></div>
+      <div class="sb-badge"><i class="fas fa-check-circle"></i> <span id="toc-done">0/8</span> аяқталды</div>
+    </div>
+  </div>
+  <span class="slbl">I. Python бағдарламалау</span>
+  <div class="tgrid">
+    <button onclick="openTopic(0)" class="tcard"><div class="ticon" style="background:#ede9fe;color:#7c3aed"><i class="fas fa-th"></i></div><div><div class="tname">1. Екі өлшемді массивтер</div><div class="tdesc">Матрицалармен жұмыс</div></div><div class="tscore" id="ts0">—</div></button>
+    <button onclick="openTopic(1)" class="tcard"><div class="ticon" style="background:#dcfce7;color:#16a34a"><i class="fas fa-cubes"></i></div><div><div class="tname">2. Python кітапханалары</div><div class="tdesc">Math, Random модульдері</div></div><div class="tscore" id="ts1">—</div></button>
+    <button onclick="openTopic(2)" class="tcard"><div class="ticon" style="background:#fef3c7;color:#d97706"><i class="fas fa-database"></i></div><div><div class="tname">3. Дерекқор негіздері</div><div class="tdesc">SQL, кесте, жазба</div></div><div class="tscore" id="ts2">—</div></button>
+  </div>
+  <span class="slbl">II. Желілер мен қауіпсіздік</span>
+  <div class="tgrid">
+    <button onclick="openTopic(3)" class="tcard"><div class="ticon" style="background:#fee2e2;color:#dc2626"><i class="fas fa-network-wired"></i></div><div><div class="tname">4. Компьютерлік желілер</div><div class="tdesc">LAN, WAN, топологиялар</div></div><div class="tscore" id="ts3">—</div></button>
+    <button onclick="openTopic(4)" class="tcard"><div class="ticon" style="background:#fff1f2;color:#e11d48"><i class="fas fa-shield-alt"></i></div><div><div class="tname">5. Ақпараттық қауіпсіздік</div><div class="tdesc">Кибер қауіптер, қорғаныс</div></div><div class="tscore" id="ts4">—</div></button>
+  </div>
+  <span class="slbl">III. Алгоритмдер және графика</span>
+  <div class="tgrid">
+    <button onclick="openTopic(5)" class="tcard"><div class="ticon" style="background:#ecfeff;color:#0891b2"><i class="fas fa-search"></i></div><div><div class="tname">6. Іздеу алгоритмдері</div><div class="tdesc">Сызықтық, бинарлық</div></div><div class="tscore" id="ts5">—</div></button>
+    <button onclick="openTopic(6)" class="tcard"><div class="ticon" style="background:#fff7ed;color:#ea580c"><i class="fas fa-sort-amount-up"></i></div><div><div class="tname">7. Сұрыптау алгоритмдері</div><div class="tdesc">Bubble Sort, Selection Sort</div></div><div class="tscore" id="ts6">—</div></button>
+    <button onclick="openTopic(7)" class="tcard"><div class="ticon" style="background:#f5f3ff;color:#6d28d9"><i class="fas fa-paint-brush"></i></div><div><div class="tname">8. Графикалық редакторлар</div><div class="tdesc">Растр, вектор, RGB</div></div><div class="tscore" id="ts7">—</div></button>
+  </div>
+</div>
+
+<!-- ======================================================
+     TOPIC PAGE
+====================================================== -->
+<div id="topic-page" class="page">
+  <div class="phdr">
+    <button onclick="nav('toc-page','nav-toc')" class="btn btn-back btn-sm"><i class="fas fa-arrow-left"></i> Артқа</button>
+    <div class="ptitle" id="tp-title">Тақырып</div>
+  </div>
+  <div class="tabs" id="topic-tabs">
+    <button class="tabb active" onclick="stab('theory',this)"><i class="fas fa-book-open"></i> Теория</button>
+    <button class="tabb" onclick="stab('video',this)"><i class="fas fa-play-circle"></i> Бейне</button>
+    <button class="tabb" onclick="stab('levels',this)"><i class="fas fa-layer-group"></i> Деңгейлік тапсырмалар</button>
+    <button class="tabb" onclick="stab('qmzh',this)"><i class="fas fa-chalkboard-teacher"></i> ҚМЖ</button>
+    <button class="tabb" onclick="stab('test',this)"><i class="fas fa-clipboard-check"></i> Тест</button>
+  </div>
+  <div style="padding:0 24px">
+    <div id="tab-theory" class="tab-content active"></div>
+    <div id="tab-video" class="tab-content"></div>
+    <div id="tab-levels" class="tab-content"></div>
+    <div id="tab-qmzh" class="tab-content"></div>
+    <div id="tab-test" class="tab-content"></div>
+  </div>
+</div>
+
+<!-- ======================================================
+     GAMES PAGE
+====================================================== -->
+<div id="games-page" class="page">
+  <div class="phdr">
+    <div class="ptitle">🎮 Ойын алаңы</div>
+    <button onclick="nav('cover-page','')" class="btn btn-back btn-sm"><i class="fas fa-home"></i></button>
+  </div>
+  <div class="sbanner" style="margin:0 24px 22px">
+    <div><div class="sb-lbl">Ойын ұпайлары</div><div class="sb-num"><span id="game-sc">0</span></div></div>
+    <div style="display:flex;gap:8px"><div class="sb-badge"><i class="fas fa-fire"></i><span id="game-streak"> 0</span> серия</div></div>
+  </div>
+  <div style="padding:0 24px">
+
+    <!-- GAME 1: Matching -->
+    <div class="game-card">
+      <div class="game-hdr" style="background:linear-gradient(135deg,#6d28d9,#4f46e5);color:#fff"><i class="fas fa-link"></i>1-ойын: Сәйкестендіру</div>
+      <div class="game-body">
+        <p style="color:var(--tm);font-size:13px;font-weight:600;margin-bottom:14px">Терминді дұрыс анықтамасымен сәйкестендіріңіз</p>
+        <div class="match-cols"><div id="ml" style="display:flex;flex-direction:column;gap:8px"></div><div id="mr" style="display:flex;flex-direction:column;gap:8px"></div></div>
+        <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div id="match-res" style="font-weight:800;font-size:14px"></div>
+          <button onclick="initMatch()" class="btn btn-p btn-sm"><i class="fas fa-redo"></i>Қайта</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 2: Typing -->
+    <div class="game-card">
+      <div class="game-hdr" style="background:linear-gradient(135deg,#0891b2,#06b6d4);color:#fff"><i class="fas fa-keyboard"></i>2-ойын: Кодты теру</div>
+      <div class="game-body">
+        <p style="color:var(--tm);font-size:13px;font-weight:600;margin-bottom:12px">Кодты дәл теріңіз — уақыт өлшеледі!</p>
+        <div class="typing-disp" id="ty-disp"></div>
+        <div style="display:flex;gap:16px;margin-bottom:12px;font-size:13px;font-weight:700;color:var(--tm)">
+          <span>⏱ <span id="ty-time">0.0</span>с</span>
+          <span>🎯 <span id="ty-acc">100</span>%</span>
+          <span>💨 <span id="ty-wpm">0</span> WPM</span>
+        </div>
+        <input class="typing-inp" id="ty-inp" placeholder="Осында теруді бастаңыз..." oninput="handleTyping(this)" autocomplete="off" spellcheck="false">
+        <div style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button onclick="initTyping()" class="btn btn-p btn-sm"><i class="fas fa-redo"></i>Жаңа</button>
+          <div id="ty-res" style="font-weight:800;font-size:14px;color:var(--ok)"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 3: Drag Drop -->
+    <div class="game-card">
+      <div class="game-hdr" style="background:linear-gradient(135deg,#059669,#10b981);color:#fff"><i class="fas fa-puzzle-piece"></i>3-ойын: Орынын тап</div>
+      <div class="game-body">
+        <p style="color:var(--tm);font-size:13px;font-weight:600;margin-bottom:14px">Терминдерді дұрыс орынға апарыңыз</p>
+        <div id="drag-chips" style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px"></div>
+        <div id="drop-zones"></div>
+        <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div id="drag-res" style="font-weight:700;font-size:14px"></div>
+          <div style="display:flex;gap:8px">
+            <button onclick="checkDrag()" class="btn btn-p btn-sm"><i class="fas fa-check"></i>Тексеру</button>
+            <button onclick="initDrag()" class="btn btn-o btn-sm"><i class="fas fa-redo"></i>Қайта</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 4: Quick Quiz Timer -->
+    <div class="game-card">
+      <div class="game-hdr" style="background:linear-gradient(135deg,#dc2626,#f97316);color:#fff"><i class="fas fa-bolt"></i>4-ойын: Жылдам тест (15 сек)</div>
+      <div class="game-body" id="qq-area">
+        <div style="height:8px;background:#fee2e2;border-radius:4px;margin-bottom:18px;overflow:hidden"><div id="qq-bar" style="height:100%;background:linear-gradient(to right,#dc2626,#f97316);width:100%;transition:width .1s linear"></div></div>
+        <div id="qq-q" style="font-size:17px;font-weight:800;margin-bottom:18px;min-height:48px"></div>
+        <div id="qq-opts" style="display:grid;grid-template-columns:1fr 1fr;gap:9px"></div>
+        <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <div style="font-size:13px;font-weight:700;color:var(--tm)">Сұрақ <span id="qq-num">1</span>/10</div>
+          <div style="font-weight:800;font-size:15px;color:var(--p)">Ұпай: <span id="qq-sc">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 5: Memory -->
+    <div class="game-card">
+      <div class="game-hdr" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff"><i class="fas fa-brain"></i>5-ойын: Жад ойыны (Жұп тап)</div>
+      <div class="game-body">
+        <p style="color:var(--tm);font-size:13px;font-weight:600;margin-bottom:14px">Карточкаларды аударып, жұбын табыңыз</p>
+        <div style="margin-bottom:12px;display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--tm)">
+          <span>Қадам: <span id="mem-moves">0</span></span>
+          <span>Табылды: <span id="mem-found">0</span>/8</span>
+        </div>
+        <div class="mem-grid" id="mem-grid"></div>
+        <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div id="mem-res" style="font-weight:800;font-size:14px;color:var(--ok)"></div>
+          <button onclick="initMemory()" class="btn btn-p btn-sm"><i class="fas fa-redo"></i>Қайта</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 6: Word Search -->
+    <div class="game-card">
+      <div class="game-hdr" style="background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff"><i class="fas fa-search"></i>6-ойын: Сөз іздеу</div>
+      <div class="game-body">
+        <p style="color:var(--tm);font-size:13px;font-weight:600;margin-bottom:6px">Информатика терминдерін тордан тауып белгілеңіз</p>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px" id="ws-words"></div>
+        <div class="ws-grid" id="ws-grid"></div>
+        <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div id="ws-res" style="font-weight:800;font-size:14px;color:var(--ok)"></div>
+          <button onclick="initWordSearch()" class="btn btn-p btn-sm"><i class="fas fa-redo"></i>Қайта</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 7: True/False -->
+    <div class="game-card">
+      <div class="game-hdr" style="background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff"><i class="fas fa-question-circle"></i>7-ойын: Дұрыс / Бұрыс</div>
+      <div class="game-body" id="tf-area">
+        <p style="color:var(--tm);font-size:13px;font-weight:600;margin-bottom:16px">Мәлімдемені оқып, Дұрыс немесе Бұрыс деп таңдаңыз</p>
+        <div id="tf-q" style="font-size:16px;font-weight:800;background:#f8faff;border-radius:14px;padding:20px;margin-bottom:18px;border:2px solid var(--bd);min-height:80px;display:flex;align-items:center"></div>
+        <div style="display:flex;gap:14px;justify-content:center;margin-bottom:14px">
+          <button onclick="answerTF(true)" class="btn" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;min-width:130px;font-size:16px"><i class="fas fa-check"></i>ДҰРЫС</button>
+          <button onclick="answerTF(false)" class="btn" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;min-width:130px;font-size:16px"><i class="fas fa-times"></i>БҰРЫС</button>
+        </div>
+        <div id="tf-fb" style="text-align:center;font-weight:800;font-size:15px;min-height:24px"></div>
+        <div style="margin-top:12px;display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--tm)">
+          <span>Сұрақ <span id="tf-num">1</span>/12</span>
+          <span>Ұпай: <span id="tf-sc">0</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 8: Wordwall -->
+    <div class="game-card">
+      <div class="game-hdr" style="background:linear-gradient(135deg,#be185d,#ec4899);color:#fff"><i class="fas fa-gamepad"></i>8-ойын: Интерактивті ойын</div>
+      <iframe src="https://wordwall.net/play/76346/526/922?ref=embed" width="100%" height="500" frameborder="0" allowfullscreen style="display:block"></iframe>
+    </div>
+
+  </div>
+</div>
+
+<!-- ======================================================
+     CHATBOT PAGE
+====================================================== -->
+<div id="chatbot-page" class="page">
+  <div class="phdr">
+    <div class="ptitle">🤖 AI Көмекші</div>
+    <button onclick="nav('cover-page','')" class="btn btn-back btn-sm"><i class="fas fa-home"></i></button>
+  </div>
+  <div style="padding:0 24px">
+    <div style="background:linear-gradient(135deg,#ede9fe,#dbeafe);border-radius:18px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;border:2px solid var(--bd)">
+      <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+           style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 12px rgba(79,70,229,.25)">
+      <div>
+        <div style="font-size:16px;font-weight:900;color:var(--p)">InfoBot — Информатика көмекшісі</div>
+        <div style="font-size:13px;color:var(--tm);font-weight:600;margin-top:3px">Информатика бойынша кез келген сұрақ қойыңыз!</div>
+      </div>
+    </div>
+    <div class="chat-wrap">
+      <div class="chat-hdr">
+        <div class="chat-av">🤖</div>
+        <div>
+          <div style="color:#fff;font-weight:900;font-size:16px">InfoBot</div>
+          <div style="color:rgba(255,255,255,.75);font-size:12px;font-weight:600"><span style="width:8px;height:8px;background:#4ade80;border-radius:50%;display:inline-block;margin-right:5px;animation:pulse2 2s infinite"></span>Онлайн</div>
+        </div>
+      </div>
+      <div class="chat-msgs" id="chat-msgs"></div>
+      <div class="qreplies" id="qreplies">
+        <button class="qr" onclick="sendQR(this)">Массив дегеніміз не?</button>
+        <button class="qr" onclick="sendQR(this)">SQL дегеніміз не?</button>
+        <button class="qr" onclick="sendQR(this)">Python-да цикл</button>
+        <button class="qr" onclick="sendQR(this)">Желі топологиялары</button>
+        <button class="qr" onclick="sendQR(this)">Бинарлық іздеу</button>
+        <button class="qr" onclick="sendQR(this)">Bubble Sort қалай жұмыс істейді?</button>
+      </div>
+      <div class="chat-inp-area">
+        <input class="chat-inp" id="chat-inp" placeholder="Сұрағыңызды жазыңыз..." onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="chat-send" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING NAV -->
+<nav class="fnav">
+  <button class="fnav-btn active" id="nav-cover" onclick="nav('cover-page','nav-cover')"><i class="fas fa-home"></i><span>Басты</span></button>
+  <button class="fnav-btn" id="nav-toc" onclick="nav('toc-page','nav-toc')"><i class="fas fa-book"></i><span>Тақырып</span></button>
+  <button class="fnav-btn" id="nav-games" onclick="nav('games-page','nav-games')"><i class="fas fa-gamepad"></i><span>Ойын</span></button>
+  <button class="fnav-btn" id="nav-chat" onclick="nav('chatbot-page','nav-chat');initChat()"><i class="fas fa-robot"></i><span>AI</span></button>
+</nav>
+
+</div><!-- #app -->
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const topics = [
+  {
+    id:0, title:"Екі өлшемді массивтер",
+    img:"https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80",
+    desc:"Python тілінде матрицалармен жұмыс жасауды үйренеміз",
+    ytId:"rvTejAg_fbY",
+    ytTitle:"Екі өлшемді массивтер – Python",
+    theory:`
+      <div style="font-size:15px;line-height:1.8;font-weight:600;margin-bottom:16px"><strong>Екі өлшемді массив</strong> – элементтері жолдар мен бағандар түрінде ұйымдастырылған кестелік құрылым. Математикада <em>матрица</em> деп аталады.</div>
+      <div class="code-block"><span class="cmt"># Матрица құру мысалы</span><br>
+<span class="kw">matrix</span> = [<br>
+&nbsp;&nbsp;[<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>],&nbsp;&nbsp;<span class="cmt"># 0-жол</span><br>
+&nbsp;&nbsp;[<span class="num">4</span>, <span class="num">5</span>, <span class="num">6</span>],&nbsp;&nbsp;<span class="cmt"># 1-жол</span><br>
+&nbsp;&nbsp;[<span class="num">7</span>, <span class="num">8</span>, <span class="num">9</span>]&nbsp;&nbsp;&nbsp;<span class="cmt"># 2-жол</span><br>
+]<br><br>
+<span class="cmt"># Элементке қол жеткізу</span><br>
+<span class="fn">print</span>(matrix[<span class="num">1</span>][<span class="num">2</span>])&nbsp;&nbsp;<span class="cmt"># Нәтижесі: 6</span></div>
+      <div class="ibox blue"><i class="fas fa-info-circle" style="margin-right:8px"></i>matrix[жол][баған] — индекстеу 0-ден басталады!</div>
+      <h3 style="font-weight:900;font-size:18px;margin:20px 0 12px">Кірістірілген цикл арқылы аралау:</h3>
+      <div class="code-block"><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">3</span>):<br>
+&nbsp;&nbsp;<span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="num">3</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">print</span>(matrix[i][j], <span class="str">end=" "</span>)<br>
+&nbsp;&nbsp;<span class="fn">print</span>()</div>
+      <h3 style="font-weight:900;font-size:18px;margin:20px 0 12px">Қолданылуы:</h3>
+      <ul style="list-style:disc;padding-left:24px;font-size:14px;font-weight:600;line-height:2;color:var(--tm)">
+        <li>Excel кестелері — мәліметтер матрица түрінде</li>
+        <li>Суреттер — пиксельдер торы (RGB матрицасы)</li>
+        <li>Ойындар — шахмат тақтасы, карталар</li>
+        <li>Машина үйренуі — деректер жиынтықтары</li>
+      </ul>`,
+    levels:{
+      l1:[
+        {t:"Матрица шығару",d:"A = [[1,2,3],[4,5,6],[7,8,9]] матрицасын экранға шығарыңыз. for циклін қолданыңыз.",pts:10},
+        {t:"Элементті табу",d:"3x3 матрицадан ең үлкен элементті табыңыз.",pts:10}
+      ],
+      l2:[
+        {t:"Диагональ сомасы",d:"n×n матрицаның негізгі диагональ элементтерінің қосындысын табыңыз.",pts:20},
+        {t:"Матрицаны транспонирлеу",d:"Берілген матрицаның транспозициясын жасаңыз (жолдар мен бағандарды ауыстырыңыз).",pts:20}
+      ],
+      l3:[
+        {t:"Матрица көбейту",d:"Екі 3x3 матрицаны математикалық ережемен көбейтіңіз. Нәтижені экранға шығарыңыз.",pts:30},
+        {t:"Жылан ойыны",d:"Матрица негізінде 5x5 тордағы жылан ойынын жазыңыз. Жылан азықты жесін, ұзарсын.",pts:40}
+      ]
+    },
+    qmzh:{
+      tema:"Екі өлшемді массивтерді құру және элементтерін шығару",
+      maqsat:"9.3.3.1 – екі өлшемді массивтерді Python тілінде қолдану",
+      steps:[
+        {t:"Басы (5 мин)",teach:"«Миға шабуыл»: Бір өлшемді массив пен екі өлшемді массивтің айырмашылығы?",stu:"Сұраққа жауап береді, мысалдар келтіреді."},
+        {t:"Ортасы (30 мин)",teach:"Матрица ұғымын, индекстеуді Python кодымен түсіндіру. Кірістірілген цикл мысалы.",stu:"Дәптерге конспект жазады. Тапсырмаларды компьютерде орындайды."},
+        {t:"Соңы (5 мин)",teach:"«Бағдаршам» рефлексиясы. Үй тапсырмасы: 45-бет, №3.",stu:"Түсінігін бағалайды. Үй тапсырмасын жазады."}
+      ]
+    },
+    test:[
+      {q:"Екі өлшемді массивтің басқаша атауы?",opts:["Вектор","Матрица","Скаляр"],a:1},
+      {q:"A = [[1,2],[3,4]]. A[0][1] неге тең?",opts:["1","2","3"],a:1},
+      {q:"Матрицаны аралау үшін қандай цикл?",opts:["While","Кірістірілген For","If-else"],a:1},
+      {q:"3x3 матрицадағы элементтер саны?",opts:["6","9","12"],a:1}
+    ]
+  },
+  {
+    id:1, title:"Python кітапханалары",
+    img:"https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80",
+    desc:"Math және Random модульдерін қолданамыз",
+    ytId:"GOuogLMfzLY",
+    ytTitle:"Python модульдері – Math, Random",
+    theory:`
+      <div style="font-size:15px;line-height:1.8;font-weight:600;margin-bottom:16px">Python-ның күші оның бай кітапханаларында. <strong>Модуль</strong> – дайын функциялар жиынтығы. <code style="background:#f1f5f9;padding:2px 6px;border-radius:5px">import</code> кілт сөзімен қосамыз.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0">
+        <div class="ibox yellow" style="margin:0"><strong>Math модулі</strong><br>Математикалық есептеулер үшін</div>
+        <div class="ibox blue" style="margin:0"><strong>Random модулі</strong><br>Кездейсоқ сандар үшін</div>
+      </div>
+      <div class="code-block"><span class="kw">import</span> math<br>
+<span class="kw">import</span> random<br><br>
+<span class="cmt"># Math функциялары</span><br>
+<span class="fn">print</span>(math.<span class="fn">sqrt</span>(<span class="num">16</span>))&nbsp;&nbsp;&nbsp;<span class="cmt"># 4.0</span><br>
+<span class="fn">print</span>(math.<span class="fn">pi</span>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt"># 3.14159...</span><br>
+<span class="fn">print</span>(math.<span class="fn">pow</span>(<span class="num">2</span>,<span class="num">10</span>))&nbsp;<span class="cmt"># 1024.0</span><br>
+<span class="fn">print</span>(math.<span class="fn">floor</span>(<span class="num">3.7</span>))<span class="cmt"># 3</span><br><br>
+<span class="cmt"># Random функциялары</span><br>
+n = random.<span class="fn">randint</span>(<span class="num">1</span>, <span class="num">100</span>)<br>
+x = random.<span class="fn">random</span>()<span class="cmt"># 0.0-1.0</span><br>
+lst = [<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>]<br>
+random.<span class="fn">shuffle</span>(lst)</div>`,
+    levels:{
+      l1:[
+        {t:"Кездейсоқ сан",d:"1-ден 100-ге дейін кездейсоқ сан генерациялап экранға шығарыңыз.",pts:10},
+        {t:"Түбір есептеу",d:"Пайдаланушы енгізген санның квадрат түбірін табыңыз.",pts:10}
+      ],
+      l2:[
+        {t:"Шайтан кубигі",d:"random.randint() қолданып 2 кубик лақтыру симуляциясын жасаңыз. 100 рет лақтырып, нәтижелер статистикасын көрсетіңіз.",pts:20},
+        {t:"Тригонометрия",d:"math модулін қолданып sin, cos, tan мәндерін кестеде шығарыңыз (0°-ден 360°-ге).",pts:20}
+      ],
+      l3:[
+        {t:"Лотерея симуляциясы",d:"1-49 аралығынан 6 бірегей кездейсоқ сан таңдаңыз. Пайдаланушы 6 сан енгізсін, сәйкесін анықтаңыз.",pts:35},
+        {t:"Статистика модулі",d:"statistics модулін импорттап, 20 кездейсоқ санның mean, median, mode, stdev мәндерін есептеңіз.",pts:40}
+      ]
+    },
+    qmzh:{
+      tema:"Python кітапханалары: Math және Random модульдері",
+      maqsat:"9.3.2.1 – Python стандартты модульдерін қолдану",
+      steps:[
+        {t:"Басы (5 мин)",teach:"Тест арқылы өткен тақырыпты тексеру. «Модуль дегеніміз не?»",stu:"Тест тапсырады. Сұраққа жауап береді."},
+        {t:"Ортасы (30 мин)",teach:"Math және Random модульдерін түсіндіру. Демонстрация.",stu:"Конспект жазады. Тапсырмаларды орындайды."},
+        {t:"Соңы (5 мин)",teach:"«3-2-1» рефлексиясы. Үй тапсырмасы.",stu:"3 нәрсе үйрендім, 2 қызықты, 1 сұрақ жазады."}
+      ]
+    },
+    test:[
+      {q:"Модульді қосу командасы?",opts:["include","import","using"],a:1},
+      {q:"Квадрат түбір функциясы?",opts:["sqr","sqrt","abs"],a:1},
+      {q:"Кездейсоқ бүтін сан алу?",opts:["random()","randint()","choice()"],a:1},
+      {q:"math.floor(3.9) нәтижесі?",opts:["3","4","3.9"],a:0}
+    ]
+  },
+  {
+    id:2, title:"Дерекқор негіздері",
+    img:"https://images.unsplash.com/photo-1544383835-bda2bc66a55d?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80",
+    desc:"Дерекқор, SQL, кесте, жазба ұғымдары",
+    ytId:"HXV3zeQKqGY",
+    ytTitle:"Дерекқор негіздері – SQL",
+    theory:`
+      <div style="font-size:15px;line-height:1.8;font-weight:600;margin-bottom:16px"><strong>Дерекқор (Database)</strong> – ұзақ мерзімге сақталатын, арнайы құрылымдалған мәліметтер жиынтығы.</div>
+      <div class="ibox blue"><i class="fas fa-info-circle" style="margin-right:8px"></i><strong>ДҚБЖ</strong> – Дерекқорды Басқару Жүйесі. Мысалдар: MySQL, PostgreSQL, SQLite, MS Access</div>
+      <h3 style="font-weight:900;font-size:17px;margin:18px 0 12px">Негізгі ұғымдар:</h3>
+      <div style="overflow-x:auto;margin-bottom:16px"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:linear-gradient(135deg,var(--p),var(--s));color:#fff"><th style="padding:11px;font-weight:800">Термин</th><th style="padding:11px;font-weight:800">Анықтамасы</th><th style="padding:11px;font-weight:800">Мысал</th></tr></thead><tbody><tr style="background:#f8faff"><td style="padding:10px;border:1px solid #e5e7eb">Өріс (Field)</td><td style="padding:10px;border:1px solid #e5e7eb">Кестенің бағаны</td><td style="padding:10px;border:1px solid #e5e7eb">Аты, Жасы, Қала</td></tr><tr><td style="padding:10px;border:1px solid #e5e7eb">Жазба (Record)</td><td style="padding:10px;border:1px solid #e5e7eb">Кестенің жолы</td><td style="padding:10px;border:1px solid #e5e7eb">Алматы, 15, Алматы</td></tr><tr style="background:#f8faff"><td style="padding:10px;border:1px solid #e5e7eb">Кілт (Primary Key)</td><td style="padding:10px;border:1px solid #e5e7eb">Бірегей анықтаушы</td><td style="padding:10px;border:1px solid #e5e7eb">ID: 1, 2, 3...</td></tr></tbody></table></div>
+      <h3 style="font-weight:900;font-size:17px;margin:16px 0 12px">SQL сұраныстары:</h3>
+      <div class="code-block"><span class="cmt">-- Деректерді таңдау</span><br>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> students;<br>
+<span class="kw">SELECT</span> name, age <span class="kw">FROM</span> students <span class="kw">WHERE</span> age > <span class="num">15</span>;<br><br>
+<span class="cmt">-- Деректерді қосу</span><br>
+<span class="kw">INSERT INTO</span> students (name, age) <span class="kw">VALUES</span> (<span class="str">'Айдар'</span>, <span class="num">16</span>);<br><br>
+<span class="cmt">-- Деректерді өзгерту</span><br>
+<span class="kw">UPDATE</span> students <span class="kw">SET</span> age=<span class="num">17</span> <span class="kw">WHERE</span> name=<span class="str">'Айдар'</span>;</div>`,
+    levels:{
+      l1:[
+        {t:"SQL SELECT",d:"Оқушылар кестесінен барлық оқушыларды шығаратын SQL сұраныс жазыңыз.",pts:10},
+        {t:"Кестені сипаттау",d:"Кітапхана жүйесіне арналған 'кітаптар' кестесін жасаңыз: id, атауы, авторы, жылы.",pts:10}
+      ],
+      l2:[
+        {t:"WHERE сұраныс",d:"Оқушылар кестесінен бағасы 4-тен жоғары барлық оқушыларды WHERE арқылы шығарыңыз.",pts:20},
+        {t:"JOIN операциясы",d:"'students' және 'grades' кестелерін байланыстырып, оқушы аты мен бағасын бірге шығарыңыз.",pts:20}
+      ],
+      l3:[
+        {t:"Python + SQLite",d:"Python-да sqlite3 модулін қолданып, мектеп дерекқорын жасаңыз, 5 оқушы деректерін енгізіңіз және шығарыңыз.",pts:40},
+        {t:"Іздеу жүйесі",d:"Python-SQLite негізінде оқушыларды аты бойынша іздейтін консольдық қосымша жазыңыз.",pts:45}
+      ]
+    },
+    qmzh:{
+      tema:"Дерекқор негіздері: кесте, жазба, өріс, SQL",
+      maqsat:"9.4.1.1 – дерекқор компоненттерін ажырата білу, SQL сұраныстарын жазу",
+      steps:[
+        {t:"Басы (5 мин)",teach:"Телефон кітабын мысал ретінде алу. «Бұл дерекқор ма?» сұрағы.",stu:"Күнделікті өмірден дерекқор мысалдарын ойлайды."},
+        {t:"Ортасы (30 мин)",teach:"ДҚБЖ, кесте, өріс, жазба, кілт ұғымдарын түсіндіру. SQL SELECT, INSERT демонстрациясы.",stu:"Access немесе онлайн SQL редакторында кесте жасайды."},
+        {t:"Соңы (5 мин)",teach:"«Синквейн» рефлексиясы. Үй: 5 жазба дерекқор жасап келу.",stu:"'Дерекқор' сөзіне синквейн жазады."}
+      ]
+    },
+    test:[
+      {q:"Дерекқордағы жол қалай аталады?",opts:["Өріс","Жазба","Файл"],a:1},
+      {q:"Ең танымал сұраныс тілі?",opts:["HTML","SQL","Python"],a:1},
+      {q:"ДҚБЖ дегеніміз не?",opts:["Дерекқорды басқару жүйесі","Деректерді қорғау","Блок жүйесі"],a:0},
+      {q:"SQL-де таңдау операторы?",opts:["GET","FIND","SELECT"],a:2}
+    ]
+  },
+  {
+    id:3, title:"Компьютерлік желілер",
+    img:"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80",
+    desc:"LAN, MAN, WAN, топологиялар, протоколдар",
+    ytId:"3QhU9jd03a0",
+    ytTitle:"Компьютерлік желілер – LAN, WAN, протоколдар",
+    theory:`
+      <div style="font-size:15px;line-height:1.8;font-weight:600;margin-bottom:16px"><strong>Компьютерлік желі</strong> – деректер алмасу үшін байланысқан компьютерлер жиынтығы.</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0">
+        <div class="ibox green" style="margin:0;text-align:center"><strong>LAN</strong><br>Жергілікті желі<br><small>Мектеп, кеңсе</small></div>
+        <div class="ibox yellow" style="margin:0;text-align:center"><strong>MAN</strong><br>Қалалық желі<br><small>Қала ішінде</small></div>
+        <div class="ibox blue" style="margin:0;text-align:center"><strong>WAN</strong><br>Ғаламдық желі<br><small>Интернет</small></div>
+      </div>
+      <h3 style="font-weight:900;font-size:17px;margin:18px 0 12px">Желі топологиялары:</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+        <div style="background:#faf5ff;padding:14px;border-radius:13px;border:2px solid #e9d5ff;text-align:center"><div style="font-size:28px;margin-bottom:6px">⭐</div><strong style="color:#6d28d9">Жұлдыз</strong><p style="font-size:12px;color:var(--tm);margin-top:5px;font-weight:600">Барлығы орталық хабқа</p></div>
+        <div style="background:#fff7ed;padding:14px;border-radius:13px;border:2px solid #fed7aa;text-align:center"><div style="font-size:28px;margin-bottom:6px">➖</div><strong style="color:#ea580c">Шина</strong><p style="font-size:12px;color:var(--tm);margin-top:5px;font-weight:600">Бір желіге тізбектелген</p></div>
+        <div style="background:#f0fdf4;padding:14px;border-radius:13px;border:2px solid #bbf7d0;text-align:center"><div style="font-size:28px;margin-bottom:6px">🔄</div><strong style="color:#16a34a">Сақина</strong><p style="font-size:12px;color:var(--tm);margin-top:5px;font-weight:600">Тұйық сақина</p></div>
+      </div>
+      <div class="code-block"><span class="cmt"># Интернет протоколдары</span><br>
+TCP/IP &nbsp;&nbsp;→ <span class="str">Деректерді беру протоколы</span><br>
+HTTP &nbsp;&nbsp;&nbsp;→ <span class="str">Веб-беттерді жүктеу</span><br>
+HTTPS &nbsp;&nbsp;→ <span class="str">Шифрланған HTTP</span><br>
+FTP &nbsp;&nbsp;&nbsp;&nbsp;→ <span class="str">Файлдарды тасымалдау</span><br>
+DNS &nbsp;&nbsp;&nbsp;&nbsp;→ <span class="str">Домен → IP аудару</span></div>`,
+    levels:{
+      l1:[
+        {t:"Желі классификациясы",d:"LAN, MAN, WAN желілерінің айырмашылығын кесте түрінде жазыңыз: ауқымы, жылдамдығы, мысалы.",pts:10},
+        {t:"Топология анықтау",d:"Берілген 3 суреттен қайсысы жұлдыз, шина, сақина топологиясы екенін анықтаңыз.",pts:10}
+      ],
+      l2:[
+        {t:"IP мекенжай",d:"IPv4 адресі 192.168.1.0/24 желісі үшін: желі мекенжайы, хост диапазоны, broadcast мекенжайын анықтаңыз.",pts:20},
+        {t:"Протоколдар кестесі",d:"HTTP, HTTPS, FTP, DNS, DHCP протоколдарының порт нөмірлерін зерттеп, кесте жасаңыз.",pts:22}
+      ],
+      l3:[
+        {t:"Желі жоспарлауы",d:"Мектеп желісін жоспарлаңыз: 3 сынып бөлмесі, кітапхана, мұғалімдер бөлмесі. Топология таңдап, схема сызыңыз.",pts:38},
+        {t:"Ping & Tracert",d:"Командалық жолда ping, tracert командаларын орындап, нәтижелерді талдаңыз. Есеп жазыңыз.",pts:42}
+      ]
+    },
+    qmzh:{
+      tema:"Компьютерлік желілер: топологиялар және протоколдар",
+      maqsat:"9.5.1.1 – желі түрлерін, топологияларын ажырата білу",
+      steps:[
+        {t:"Басы (5 мин)",teach:"«Сіз интернетті қалай қолданасыз?» ой-толғаныс.",stu:"Интернеттің күнделікті қолданысы туралы пікір айтады."},
+        {t:"Ортасы (30 мин)",teach:"LAN/MAN/WAN, топологиялар, TCP/IP протоколын схемамен түсіндіру.",stu:"Желі схемасын сызады. Топтық жұмыс: топологияны таңдап, артықшылығын айтады."},
+        {t:"Соңы (5 мин)",teach:"«Exit ticket»: 3 үйрендім, 2 қызықты, 1 сұрақ.",stu:"Стикерге жазып тақтаға жабыстырады."}
+      ]
+    },
+    test:[
+      {q:"LAN желісі дегеніміз?",opts:["Ғаламдық желі","Жергілікті желі","Қалалық желі"],a:1},
+      {q:"Барлық компьютерлер орталық хабқа қосылатын топология?",opts:["Шина","Сақина","Жұлдыз"],a:2},
+      {q:"Веб-беттерді жүктеу протоколы?",opts:["FTP","HTTP","DNS"],a:1},
+      {q:"Домен атауын IP-ге аударатын жүйе?",opts:["FTP","TCP","DNS"],a:2}
+    ]
+  },
+  {
+    id:4, title:"Ақпараттық қауіпсіздік",
+    img:"https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80",
+    desc:"Кибер қауіптер, вирустар, қорғану тәсілдері",
+    ytId:"inWWhr5tnEA",
+    ytTitle:"Ақпараттық қауіпсіздік – кибер қауіптер",
+    theory:`
+      <div style="font-size:15px;line-height:1.8;font-weight:600;margin-bottom:16px"><strong>Ақпараттық қауіпсіздік</strong> – ақпаратты рұқсатсыз кіруден, бұзудан және жоюдан қорғау жөніндегі шаралар жиынтығы.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0">
+        <div class="ibox red" style="margin:0"><strong>🦠 Вирус</strong><br>Файлдарды бұзатын, өзін-өзі көбейтетін бағдарлама</div>
+        <div class="ibox yellow" style="margin:0"><strong>🐴 Троян</strong><br>Пайдалы бағдарлама ретінде жасырынып зиян келтіреді</div>
+        <div class="ibox purple" style="margin:0"><strong>🎣 Фишинг</strong><br>Жалған сайттар арқылы жеке деректерді ұрлау</div>
+        <div class="ibox red" style="margin:0"><strong>🔒 Ransomware</strong><br>Файлдарды шифрлеп, ақша талап ету</div>
+      </div>
+      <h3 style="font-weight:900;font-size:17px;margin:18px 0 12px">Қорғану тәсілдері:</h3>
+      <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px">
+        <li style="background:#f0fdf4;padding:11px 16px;border-radius:11px;border-left:4px solid #22c55e;font-size:13px;font-weight:700"><i class="fas fa-check" style="color:#22c55e;margin-right:8px"></i>Антивирустық бағдарлама орнату</li>
+        <li style="background:#f0fdf4;padding:11px 16px;border-radius:11px;border-left:4px solid #22c55e;font-size:13px;font-weight:700"><i class="fas fa-check" style="color:#22c55e;margin-right:8px"></i>Күшті пароль қолдану (12+ символ, сан, белгі)</li>
+        <li style="background:#f0fdf4;padding:11px 16px;border-radius:11px;border-left:4px solid #22c55e;font-size:13px;font-weight:700"><i class="fas fa-check" style="color:#22c55e;margin-right:8px"></i>Екі факторлы аутентификацияны қосу (2FA)</li>
+        <li style="background:#f0fdf4;padding:11px 16px;border-radius:11px;border-left:4px solid #22c55e;font-size:13px;font-weight:700"><i class="fas fa-check" style="color:#22c55e;margin-right:8px"></i>Бағдарламаларды үнемі жаңартып отыру</li>
+        <li style="background:#f0fdf4;padding:11px 16px;border-radius:11px;border-left:4px solid #22c55e;font-size:13px;font-weight:700"><i class="fas fa-check" style="color:#22c55e;margin-right:8px"></i>Белгісіз сілтемелерді баспау</li>
+      </ul>`,
+    levels:{
+      l1:[
+        {t:"Қауіп классификациясы",d:"Вирус, троян, фишинг, ransomware-ді кесте түрінде салыстырыңыз: не істейді, қалай таралады, қалай қорғануға болады.",pts:10},
+        {t:"Пароль тексеру",d:"Берілген 5 парольдің қайсысы сенімді екенін анықтаңыз және себебін жазыңыз.",pts:10}
+      ],
+      l2:[
+        {t:"Фишинг анализі",d:"Берілген жалған email мәтінін талдап, фишинг белгілерін тізімдеңіз.",pts:22},
+        {t:"Шифрлеу негіздері",d:"Caesar cipher (Цезарь шифры) алгоритмін Python-да жазыңыз. Мәтінді шифрлеп, дешифрлеңіз.",pts:25}
+      ],
+      l3:[
+        {t:"Пароль генераторы",d:"Python-да random модулін қолданып, 16 символдық күшті пароль генераторы жазыңыз (бас/кіші әріп, сан, арнайы белгі).",pts:35},
+        {t:"Желі қауіпсіздігі",d:"Ұйымға арналған ақпараттық қауіпсіздік саясатын әзірлеңіз: 10+ ереже, санкциялар.",pts:42}
+      ]
+    },
+    qmzh:{
+      tema:"Ақпараттық қауіпсіздік: кибер қауіптер және қорғану",
+      maqsat:"9.6.1.1 – қауіпсіздік ұғымдарын білу, қорғану шараларын қолдану",
+      steps:[
+        {t:"Басы (5 мин)",teach:"«Парольіңіз қаншалықты сенімді?» ой-толғаныс. Фишинг мысалын көрсету.",stu:"Парольдарын ойша бағалайды."},
+        {t:"Ортасы (30 мин)",teach:"Кибер қауіптер, вирус, троян, фишинг, ransomware-ді практикалық мысалдармен түсіндіру.",stu:"Зиянды бағдарламалар кестесін толтырады. Күшті пароль жасайды."},
+        {t:"Соңы (5 мин)",teach:"Сауалнама. Үй: отбасына қауіпсіздік ережелерін үйрету.",stu:"3 ережені жазады, сыныпта оқиды."}
+      ]
+    },
+    test:[
+      {q:"Жалған сайт арқылы деректер ұрлау?",opts:["Хакинг","Фишинг","Спам"],a:1},
+      {q:"Файлдарды шифрлеп ақша талап ету?",opts:["Троян","Ransomware","Черв"],a:1},
+      {q:"Қандай пароль сенімді?",opts:["12345","qwerty","Xk$9mP@2z!"],a:2},
+      {q:"2FA дегеніміз не?",opts:["Екі факторлы аутентификация","Екі файлды ашу","Екі антивирус"],a:0}
+    ]
+  },
+  {
+    id:5, title:"Іздеу алгоритмдері",
+    img:"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80",
+    desc:"Сызықтық және бинарлық іздеу",
+    ytId:"P3YID7liBug",
+    ytTitle:"Іздеу алгоритмдері – Binary Search визуализация",
+    theory:`
+      <div style="font-size:15px;line-height:1.8;font-weight:600;margin-bottom:16px"><strong>Іздеу алгоритмі</strong> – деректер жиынынан берілген элементті табуға арналған алгоритм.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0">
+        <div>
+          <div class="ibox blue" style="margin:0 0 10px"><strong>🔍 Сызықтық іздеу</strong><br>O(n) — реттелмеген тізімдер</div>
+          <div class="code-block" style="margin:0;font-size:12px"><span class="kw">def</span> <span class="fn">linear</span>(arr, x):<br>&nbsp;&nbsp;<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(arr)):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> arr[i] == x:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> i<br>&nbsp;&nbsp;<span class="kw">return</span> <span class="num">-1</span></div>
+        </div>
+        <div>
+          <div class="ibox green" style="margin:0 0 10px"><strong>🎯 Бинарлық іздеу</strong><br>O(log n) — реттелген тізімдер</div>
+          <div class="code-block" style="margin:0;font-size:12px"><span class="kw">def</span> <span class="fn">binary</span>(arr, x):<br>&nbsp;&nbsp;l, r = <span class="num">0</span>, <span class="fn">len</span>(arr)-<span class="num">1</span><br>&nbsp;&nbsp;<span class="kw">while</span> l &lt;= r:<br>&nbsp;&nbsp;&nbsp;&nbsp;m = (l+r)//<span class="num">2</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> arr[m]==x: <span class="kw">return</span> m<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">elif</span> arr[m]&lt;x: l=m+<span class="num">1</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">else</span>: r=m-<span class="num">1</span><br>&nbsp;&nbsp;<span class="kw">return</span> <span class="num">-1</span></div>
+        </div>
+      </div>`,
+    levels:{
+      l1:[
+        {t:"Сызықтық іздеу",d:"[5, 3, 8, 1, 9, 2, 7] тізімінен 9 санын сызықтық іздеу арқылы табыңыз. Қанша қадам кетті?",pts:10},
+        {t:"Іздеу нәтижесі",d:"Python-да linear_search функциясын жазып, тест деректерінде тексеріңіз.",pts:12}
+      ],
+      l2:[
+        {t:"Бинарлық іздеу",d:"[1,3,5,7,9,11,13,15,17,19] тізімінен 13-ті бинарлық іздеумен табыңыз. Іздеу процесін кестеде көрсетіңіз.",pts:22},
+        {t:"Салыстыру",d:"1000 элементтік тізімде сызықтық және бинарлық іздеудің максимум қадам санын есептеңіз.",pts:22}
+      ],
+      l3:[
+        {t:"Рекурсивті іздеу",d:"Бинарлық іздеудің рекурсивті нұсқасын жазыңыз. Итеративті нұсқамен салыстырыңыз.",pts:35},
+        {t:"Іздеу оңтайландыру",d:"Телефон кітабы симуляциясын жасаңыз: 1000 контакт, атауы бойынша жылдам іздеу жүйесі.",pts:42}
+      ]
+    },
+    qmzh:{
+      tema:"Іздеу алгоритмдері: сызықтық және бинарлық",
+      maqsat:"9.3.4.1 – іздеу алгоритмдерін Python-да жазу және салыстыру",
+      steps:[
+        {t:"Басы (5 мин)",teach:"Ойын: «1-100 санды тап». Бинарлық іздеудің идеясы.",stu:"Ойын арқылы бинарлық іздеуді интуитивті ашады."},
+        {t:"Ортасы (30 мин)",teach:"Екі алгоритмді визуалды түрде слайдта көрсету. Python кодтарын жазу.",stu:"Кодты жазып, тестілейді. Қадам санын есептейді."},
+        {t:"Соңы (5 мин)",teach:"«Қайсысы тезірек?» рефлексия. Үй: O(n) vs O(log n) мысалдары.",stu:"Уақыт күрделілігін салыстырады."}
+      ]
+    },
+    test:[
+      {q:"Сызықтық іздеудің уақыт күрделілігі?",opts:["O(1)","O(n)","O(log n)"],a:1},
+      {q:"Бинарлық іздеу қандай тізімде жұмыс істейді?",opts:["Кез келген","Тек реттелген","Тек сандар"],a:1},
+      {q:"Бинарлық іздеуде алдымен не тексеріледі?",opts:["Бірінші элемент","Ортаңғы элемент","Соңғы элемент"],a:1},
+      {q:"1024 элементтен бинарлық іздеу максимум неше рет?",opts:["1024","512","10"],a:2}
+    ]
+  },
+  {
+    id:6, title:"Сұрыптау алгоритмдері",
+    img:"https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80",
+    desc:"Bubble Sort, Selection Sort алгоритмдері",
+    ytId:"kPRA0W1kECg",
+    ytTitle:"Сұрыптау алгоритмдері – Bubble & Selection Sort",
+    theory:`
+      <div style="font-size:15px;line-height:1.8;font-weight:600;margin-bottom:16px"><strong>Сұрыптау</strong> – деректерді белгілі бір ретпен орналастыру процесі.</div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <div class="ibox yellow" style="margin:0 0 10px"><strong>🫧 Bubble Sort (Көпіршік)</strong> — O(n²) — Жанасатын элементтерді ауыстырады</div>
+          <div class="code-block" style="font-size:12px"><span class="kw">def</span> <span class="fn">bubble</span>(arr):<br>&nbsp;&nbsp;n = <span class="fn">len</span>(arr)<br>&nbsp;&nbsp;<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="num">0</span>, n-i-<span class="num">1</span>):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> arr[j] &gt; arr[j+<span class="num">1</span>]:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[j], arr[j+<span class="num">1</span>] = arr[j+<span class="num">1</span>], arr[j]<br>&nbsp;&nbsp;<span class="kw">return</span> arr</div>
+        </div>
+        <div>
+          <div class="ibox red" style="margin:0 0 10px"><strong>🎯 Selection Sort (Таңдау)</strong> — O(n²) — Ең кіші элементті тауып, орналастырады</div>
+          <div class="code-block" style="font-size:12px"><span class="kw">def</span> <span class="fn">selection</span>(arr):<br>&nbsp;&nbsp;<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(arr)):<br>&nbsp;&nbsp;&nbsp;&nbsp;min_i = i<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(i+<span class="num">1</span>, <span class="fn">len</span>(arr)):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> arr[j] &lt; arr[min_i]:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;min_i = j<br>&nbsp;&nbsp;&nbsp;&nbsp;arr[i], arr[min_i] = arr[min_i], arr[i]<br>&nbsp;&nbsp;<span class="kw">return</span> arr</div>
+        </div>
+      </div>`,
+    levels:{
+      l1:[
+        {t:"Bubble Sort трассировка",d:"[64, 34, 25, 12, 22, 11, 90] тізімін Bubble Sort арқылы сұрыптаңыз. Әр өтудегі тізімді жазыңыз.",pts:10},
+        {t:"Функция жазу",d:"bubble_sort() функциясын жазыңыз. 10 санды тізімде тестілеңіз.",pts:12}
+      ],
+      l2:[
+        {t:"Selection Sort",d:"[29, 10, 14, 37, 13] тізімін Selection Sort арқылы сұрыптаңыз. Процесті кестеде көрсетіңіз.",pts:22},
+        {t:"Кері сұрыптау",d:"Insertion Sort алгоритмін жазыңыз. Кему бойынша сұрыптаңыз.",pts:22}
+      ],
+      l3:[
+        {t:"Сұрыптауды визуализациялау",d:"Python turtle немесе matplotlib-пен сұрыптау процесін анимация ретінде көрсетіңіз.",pts:38},
+        {t:"Merge Sort",d:"Бөліп, жеңу (Divide & Conquer) принципімен жұмыс істейтін Merge Sort алгоритмін жазыңыз.",pts:45}
+      ]
+    },
+    qmzh:{
+      tema:"Сұрыптау алгоритмдері: Bubble Sort және Selection Sort",
+      maqsat:"9.3.5.1 – сұрыптау алгоритмдерін жазу және салыстыру",
+      steps:[
+        {t:"Басы (5 мин)",teach:"Физикалық белсендіру: 6 оқушы алдыға шығып бойлары бойынша реттеледі.",stu:"Бойларын салыстырып, Bubble Sort принципін физикалық түрде орындайды."},
+        {t:"Ортасы (30 мин)",teach:"Екі алгоритмді анимациялы слайдпен түсіндіру. Python кодын бірге жазу.",stu:"Кодты жазып, [64,25,12,22,11] тізімін сұрыптайды."},
+        {t:"Соңы (5 мин)",teach:"QR сауалнама. Үй: Insertion Sort зерттеу.",stu:"Сауалнамаға жауап береді."}
+      ]
+    },
+    test:[
+      {q:"Bubble Sort-та не салыстырылады?",opts:["Алғашқы екі элемент","Жанасатын элементтер","Ең үлкен элементтер"],a:1},
+      {q:"Selection Sort негізгі идеясы?",opts:["Ең кішісін тауып орналастыру","Жанасатындарды ауыстыру","Тізімді бөлу"],a:0},
+      {q:"Bubble Sort уақыт күрделілігі?",opts:["O(n)","O(n²)","O(log n)"],a:1},
+      {q:"Python-да екі айнымалы мәнін ауыстыру?",opts:["a=b; b=a","a,b = b,a","swap(a,b)"],a:1}
+    ]
+  },
+  {
+    id:7, title:"Графикалық редакторлар",
+    img:"https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80",
+    desc:"Растрлық және векторлық графика, RGB, CMYK",
+    ytId:"9-n_EGgj-Gs",
+    ytTitle:"Растрлық және векторлық графика",
+    theory:`
+      <div style="font-size:15px;line-height:1.8;font-weight:600;margin-bottom:16px"><strong>Графикалық редактор</strong> – суреттерді жасауға және өңдеуге арналған бағдарлама.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0">
+        <div style="border-radius:14px;border:2px solid #fbcfe8;overflow:hidden">
+          <div style="background:linear-gradient(135deg,#be185d,#ec4899);color:#fff;padding:12px 16px;font-weight:800">📷 Растрлық графика</div>
+          <div style="padding:14px;font-size:13px;font-weight:600;line-height:2">• Пиксельдер жиынтығы<br>• Ұлғайтқанда сапа жоғалады<br>• JPEG, PNG, BMP, GIF<br>• Photoshop, GIMP</div>
+        </div>
+        <div style="border-radius:14px;border:2px solid #c4b5fd;overflow:hidden">
+          <div style="background:linear-gradient(135deg,#6d28d9,#7c3aed);color:#fff;padding:12px 16px;font-weight:800">✏️ Векторлық графика</div>
+          <div style="padding:14px;font-size:13px;font-weight:600;line-height:2">• Математикалық формулалар<br>• Кез келген өлшемде сапа сақталады<br>• SVG, AI, EPS, CDR<br>• Illustrator, Inkscape</div>
+        </div>
+      </div>
+      <h3 style="font-weight:900;font-size:17px;margin:18px 0 12px">Түс модельдері:</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+        <div class="ibox red" style="margin:0;text-align:center"><strong>RGB</strong><br>Red, Green, Blue<br><small>Экран үшін</small></div>
+        <div class="ibox blue" style="margin:0;text-align:center"><strong>CMYK</strong><br>Cyan, Magenta, Yellow, Key<br><small>Баспа үшін</small></div>
+        <div class="ibox purple" style="margin:0;text-align:center"><strong>HSL</strong><br>Hue, Saturation, Lightness<br><small>Дизайн үшін</small></div>
+      </div>`,
+    levels:{
+      l1:[
+        {t:"Растр vs Вектор",d:"Растрлық және векторлық графиканы кесте түрінде салыстырыңыз: форматтар, қолданылуы, артықшылықтары.",pts:10},
+        {t:"RGB есептеу",d:"Қызыл (255,0,0), Жасыл (0,255,0), Көк (0,0,255) RGB кодтарын 16-лық жүйеде жазыңыз.",pts:10}
+      ],
+      l2:[
+        {t:"Python PIL",d:"Pillow кітапханасымен суреттің өлшемін өзгертіңіз, сұр реңкке айналдырыңыз, нәтижені сақтаңыз.",pts:25},
+        {t:"Пиксель өңдеу",d:"Python-да 100x100 пиксельдік кескін жасаңыз, пиксельдерге кездейсоқ түс беріңіз.",pts:25}
+      ],
+      l3:[
+        {t:"Сурет фильтрі",d:"Pillow-мен суретке blur, sharpen, edge-detect фильтрлерін қолданыңыз. Нәтижелерді салыстырыңыз.",pts:38},
+        {t:"Thumbnail Generator",d:"Берілген суреттен 3 өлшемдегі (small, medium, large) thumbnail жасайтын Python скрипті жазыңыз.",pts:42}
+      ]
+    },
+    qmzh:{
+      tema:"Графикалық редакторлар: растрлық және векторлық графика",
+      maqsat:"9.7.1.1 – растрлық және векторлық графиканы ажырата білу",
+      steps:[
+        {t:"Басы (5 мин)",teach:"2 сурет: бірі ұлғайтқанда бұзылады, бірі бұзылмайды. «Айырмашылық неде?»",stu:"Суреттерді салыстырады, болжам жасайды."},
+        {t:"Ортасы (30 мин)",teach:"Растр мен вектордың принциптерін, форматтарды, RGB/CMYK-ті түсіндіру. GIMP-те практика.",stu:"GIMP-те суретті ашып, кесу, өлшем өзгерту, фильтр операцияларын жасайды."},
+        {t:"Соңы (5 мин)",teach:"«2 жұлдыз, 1 тілек» рефлексия.",stu:"Рефлексия жазады."}
+      ]
+    },
+    test:[
+      {q:"Растрлық графика нені пайдаланады?",opts:["Формулаларды","Пиксельдерді","Векторларды"],a:1},
+      {q:"Векторлық графика ұлғайтқанда?",opts:["Сапасы жоғалады","Сапасы жоғалмайды","Жоғалып кетеді"],a:1},
+      {q:"Баспа үшін қандай түс моделі?",opts:["RGB","HSL","CMYK"],a:2},
+      {q:"PNG форматы қандай графика түрі?",opts:["Векторлық","Растрлық","3D"],a:1}
+    ]
+  }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let totalScore = 0;
+let topicScores = {};
+let completedTopics = 0;
+let gameScore = 0;
+let gameStreak = 0;
+let currentTopic = 0;
+
+// ============================================================
+// NAV
+// ============================================================
+function nav(pageId, btnId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  document.querySelectorAll('.fnav-btn').forEach(b => b.classList.remove('active'));
+  if (btnId) document.getElementById(btnId)?.classList.add('active');
+  window.scrollTo(0, 0);
+  updateScoreDisplay();
+}
+
+// ============================================================
+// SCORE
+// ============================================================
+function updateScoreDisplay() {
+  const lvl = getLevel(totalScore);
+  document.getElementById('g-score').textContent = totalScore;
+  document.getElementById('g-lvl').textContent = lvl;
+  document.getElementById('toc-sc').textContent = totalScore;
+  document.getElementById('toc-lv').textContent = lvl;
+  document.getElementById('toc-done').textContent = completedTopics + '/8';
+  document.getElementById('game-sc').textContent = gameScore;
+  document.getElementById('game-streak').textContent = ' ' + gameStreak + ' серия';
+}
+
+function getLevel(sc) {
+  if (sc >= 500) return '🏆 Шебер';
+  if (sc >= 300) return '🥇 Озат';
+  if (sc >= 150) return '🥈 Тәжірибелі';
+  if (sc >= 50) return '🥉 Үйренуші';
+  return '🌱 Жаңадан бастаушы';
+}
+
+function addScore(pts) {
+  totalScore += pts;
+  updateScoreDisplay();
+  showScorePopup('+' + pts + ' ұпай');
+}
+
+function showScorePopup(txt) {
+  const el = document.createElement('div');
+  el.textContent = txt;
+  el.style.cssText = 'position:fixed;top:80px;right:24px;background:linear-gradient(135deg,#4f46e5,#06b6d4);color:#fff;padding:12px 22px;border-radius:50px;font-weight:900;font-size:16px;z-index:9999;box-shadow:0 8px 24px rgba(79,70,229,.4);animation:fadeUp .4s ease';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2000);
+}
+
+// ============================================================
+// TOPIC OPEN
+// ============================================================
+function openTopic(idx) {
+  currentTopic = idx;
+  const t = topics[idx];
+  document.getElementById('tp-title').textContent = t.title;
+
+  // Theory
+  document.getElementById('tab-theory').innerHTML = `
+    <div class="theory-hero">
+      <img src="${t.img}" alt="${t.title}" loading="lazy">
+      <div class="theory-overlay">
+        <div class="theory-overlay-text">
+          <h1>${t.title}</h1>
+          <p>${t.desc}</p>
+        </div>
+      </div>
+    </div>
+    ${t.theory}`;
+
+  // Video
+  document.getElementById('tab-video').innerHTML = `
+    <div style="margin-bottom:20px">
+      <h2 style="font-size:20px;font-weight:900;margin-bottom:6px"><i class="fas fa-play-circle" style="color:var(--err);margin-right:8px"></i>${t.ytTitle}</h2>
+      <p style="color:var(--tm);font-size:13px;font-weight:600;margin-bottom:16px">Бейне сабақты қарап, теориямен салыстырыңыз</p>
+      <div class="vwrap">
+        <iframe src="https://www.youtube.com/embed/${t.ytId}?rel=0&modestbranding=1" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="ibox yellow" style="margin-top:14px"><i class="fas fa-lightbulb" style="margin-right:7px"></i><strong>Кеңес:</strong> Алдымен теория бетін оқыңыз, бейнені қараңыз, содан соң тест тапсырыңыз.</div>
+    </div>`;
+
+  // Levels
+  const lv = t.levels;
+  const makeTask = (tasks, color, bg, pts_color) => tasks.map((tk, i) => `
+    <div class="task-card">
+      <div class="task-hdr">
+        <div class="task-num" style="background:${color}">${i+1}</div>
+        <div class="task-title">${tk.t}</div>
+      </div>
+      <div class="task-body">${tk.d}</div>
+      <span class="task-pts" style="background:${bg};color:${color}">+${tk.pts} ұпай</span>
+    </div>`).join('');
+
+  document.getElementById('tab-levels').innerHTML = `
+    <div style="margin-bottom:16px">
+      <div class="ibox blue"><i class="fas fa-info-circle" style="margin-right:7px"></i>Деңгейді таңдаңыз және тапсырманы орындаңыз. Мұғалімге тапсырып ұпай алыңыз!</div>
+    </div>
+    <div class="lvl-tabs">
+      <button class="lvl-tab l1 active" onclick="showLevel('l1',this)">🟢 1-деңгей (Базалық)</button>
+      <button class="lvl-tab l2" onclick="showLevel('l2',this)">🟡 2-деңгей (Орта)</button>
+      <button class="lvl-tab l3" onclick="showLevel('l3',this)">🔴 3-деңгей (Жоғары)</button>
+    </div>
+    <div id="lvl-l1" class="lvl-content active">${makeTask(lv.l1,'#22c55e','#dcfce7','#16a34a')}</div>
+    <div id="lvl-l2" class="lvl-content">${makeTask(lv.l2,'#f59e0b','#fef3c7','#d97706')}</div>
+    <div id="lvl-l3" class="lvl-content">${makeTask(lv.l3,'#ef4444','#fee2e2','#dc2626')}</div>`;
+
+  // QMZh
+  const q = t.qmzh;
+  const stepsHtml = q.steps.map(s => `<tr><td class="font-bold" style="font-weight:800">${s.t}</td><td>${s.teach}</td><td>${s.stu}</td></tr>`).join('');
+  document.getElementById('tab-qmzh').innerHTML = `
+    <div style="text-align:right;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+      <h2 style="font-size:18px;font-weight:900">Қысқа мерзімді сабақ жоспары</h2>
+      <button onclick="window.print()" class="btn btn-back btn-sm"><i class="fas fa-print"></i> Басып шығару</button>
+    </div>
+    <table class="qmzh-tbl">
+      <tr><td colspan="2"><strong>Тақырып:</strong> ${q.tema}</td></tr>
+      <tr><td colspan="2"><strong>Оқу мақсаты:</strong> ${q.maqsat}</td></tr>
+      <tr><td><strong>Сынып:</strong> 9</td><td><strong>Пән:</strong> Информатика</td></tr>
+      <tr><td colspan="2"><strong>Мақсаттар:</strong> Негізгі ұғымдарды біледі, практикалық тапсырманы орындайды, тест арқылы білімін дәлелдейді.</td></tr>
+    </table>
+    <table class="qmzh-tbl" style="margin-top:14px">
+      <thead><tr><th width="20%">Кезең / Уақыт</th><th width="40%">Педагогтің әрекеті</th><th width="40%">Оқушының әрекеті</th></tr></thead>
+      <tbody>${stepsHtml}</tbody>
+    </table>
+    <table class="qmzh-tbl" style="margin-top:10px">
+      <tr><td><strong>Ресурстар:</strong></td><td>Компьютер, проектор, Python IDE, интернет</td></tr>
+      <tr><td><strong>Бағалау:</strong></td><td>Формативті: бақылау, сұрақ-жауап. Жинақтаушы: тест (${t.test.length} сұрақ)</td></tr>
+    </table>`;
+
+  // Test
+  buildTest(idx);
+
+  // Switch to theory tab
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-theory').classList.add('active');
+  document.querySelectorAll('.tabb').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tabb').classList.add('active');
+
+  nav('topic-page', 'nav-toc');
+}
+
+function stab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tabb').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showLevel(id, btn) {
+  document.querySelectorAll('.lvl-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.lvl-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('lvl-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ============================================================
+// TEST
+// ============================================================
+function buildTest(idx) {
+  const t = topics[idx];
+  const container = document.getElementById('tab-test');
+  container.innerHTML = `<h2 style="font-size:20px;font-weight:900;margin-bottom:18px"><i class="fas fa-clipboard-check" style="color:var(--p);margin-right:8px"></i>Тест: ${t.title}</h2>` +
+    t.test.map((item, qi) => `
+      <div class="tq" id="tq${qi}">
+        <div class="tq-txt">${qi+1}. ${item.q}</div>
+        ${item.opts.map((o, oi) => `
+          <label class="opt">
+            <input type="radio" name="q${qi}" value="${oi}"> ${o}
+          </label>`).join('')}
+      </div>`).join('') +
+    `<div id="test-res" class="res-box" style="display:none"></div>
+     <div style="display:flex;justify-content:space-between;margin-top:18px;flex-wrap:wrap;gap:10px">
+       <button onclick="buildTest(${idx})" class="btn btn-back btn-sm"><i class="fas fa-redo"></i> Қайтадан</button>
+       <button onclick="checkTest(${idx})" class="btn btn-p">
+         <i class="fas fa-check"></i> Тексеру
+       </button>
+     </div>`;
+}
+
+function checkTest(idx) {
+  const t = topics[idx];
+  let score = 0;
+  t.test.forEach((item, qi) => {
+    const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+    const box = document.getElementById('tq' + qi);
+    if (sel && parseInt(sel.value) === item.a) {
+      score++;
+      box.classList.add('correct');
+      box.innerHTML += `<p style="color:var(--ok);font-weight:800;margin-top:8px;font-size:13px"><i class="fas fa-check-circle"></i> Дұрыс!</p>`;
+    } else {
+      box.classList.add('wrong');
+      box.innerHTML += `<p style="color:var(--err);font-weight:800;margin-top:8px;font-size:13px"><i class="fas fa-times-circle"></i> Қате. Дұрыс жауап: <strong>${item.opts[item.a]}</strong></p>`;
+    }
+  });
+  const total = t.test.length;
+  const pct = Math.round(score/total*100);
+  const medal = pct===100?'🏆 Тамаша!':pct>=75?'👍 Жақсы!':'📖 Тақырыпты қайталаңыз.';
+  const pts = score * 15;
+
+  const res = document.getElementById('test-res');
+  res.style.display = 'block';
+  res.innerHTML = `
+    <div class="res-big">${score}/${total}</div>
+    <div class="pbar"><div class="pfill" style="width:${pct}%"></div></div>
+    <div style="font-size:22px;font-weight:800;margin:8px 0">${medal}</div>
+    <div style="font-size:14px;color:var(--tm);font-weight:700">${pct}% дұрыс жауап · +${pts} ұпай</div>`;
+  res.scrollIntoView({behavior:'smooth'});
+
+  // Update scores
+  if (!topicScores[idx] || topicScores[idx] < pts) {
+    if (!topicScores[idx]) completedTopics++;
+    const diff = pts - (topicScores[idx] || 0);
+    topicScores[idx] = pts;
+    totalScore += diff;
+    document.getElementById('ts'+idx).textContent = score+'/'+total;
+    updateScoreDisplay();
+    if (diff > 0) showScorePopup('+'+diff+' ұпай');
+  }
+}
+
+// ============================================================
+// GAMES
+// ============================================================
+
+// --- GAME 1: Matching ---
+const matchData = [
+  {t:"Матрица",d:"2D массив"},
+  {t:"SQL",d:"Сұраныс тілі"},
+  {t:"LAN",d:"Жергілікті желі"},
+  {t:"Фишинг",d:"Деректер ұрлау"},
+  {t:"Bubble Sort",d:"Көпіршік сұрыптауы"},
+  {t:"RGB",d:"Түс моделі"}
+];
+let matchSel = null, matchMatchSel = null, matchCount = 0;
+
+function initMatch() {
+  matchSel = null; matchMatchSel = null; matchCount = 0;
+  const shuffled = [...matchData].sort(() => Math.random()-.5);
+  const rights = [...matchData].sort(() => Math.random()-.5);
+  const ml = document.getElementById('ml');
+  const mr = document.getElementById('mr');
+  ml.innerHTML = shuffled.map((d,i) => `<div class="match-item" id="mt${i}" onclick="selectMatch('t',${i},'${d.t}')">${d.t}</div>`).join('');
+  mr.innerHTML = rights.map((d,i) => `<div class="match-item" id="md${i}" onclick="selectMatch('d',${i},'${d.d}','${d.t}')">${d.d}</div>`).join('');
+  document.getElementById('match-res').textContent = '';
+}
+
+function selectMatch(side, idx, val, correctTerm) {
+  if (side === 't') {
+    document.querySelectorAll('[id^="mt"]').forEach(e => e.classList.remove('sel'));
+    document.getElementById('mt'+idx).classList.add('sel');
+    matchSel = {idx, val};
+  } else {
+    if (!matchSel) return;
+    const leftEl = document.getElementById('mt'+matchSel.idx);
+    const rightEl = document.getElementById('md'+idx);
+    const correct = matchData.find(m => m.t === matchSel.val)?.d === val;
+    if (correct) {
+      leftEl.classList.add('matched'); leftEl.onclick=null;
+      rightEl.classList.add('matched'); rightEl.onclick=null;
+      matchCount++;
+      if (matchCount === matchData.length) {
+        document.getElementById('match-res').innerHTML = '<span style="color:var(--ok)">🎉 Барлығы дұрыс!</span>';
+        addGameScore(50);
+      }
+    } else {
+      leftEl.classList.add('err'); rightEl.classList.add('err');
+      setTimeout(() => { leftEl.classList.remove('err','sel'); rightEl.classList.remove('err'); }, 700);
+    }
+    matchSel = null;
+  }
+}
+
+// --- GAME 2: Typing ---
+const typingTexts = [
+  "matrix = [[1,2],[3,4]]",
+  "import random",
+  "for i in range(10):",
+  "def bubble_sort(arr):",
+  "SELECT * FROM students",
+  "print(math.sqrt(16))",
+  "arr[i], arr[j] = arr[j], arr[i]"
+];
+let typingTimer = null, typingStart = null, typingActive = false, typingText = '';
+
+function initTyping() {
+  typingText = typingTexts[Math.floor(Math.random()*typingTexts.length)];
+  const disp = document.getElementById('ty-disp');
+  disp.innerHTML = typingText.split('').map(c => `<span class="char">${c==' '?'&nbsp;':c}</span>`).join('');
+  document.getElementById('ty-inp').value = '';
+  document.getElementById('ty-inp').disabled = false;
+  document.getElementById('ty-time').textContent = '0.0';
+  document.getElementById('ty-acc').textContent = '100';
+  document.getElementById('ty-wpm').textContent = '0';
+  document.getElementById('ty-res').textContent = '';
+  clearInterval(typingTimer);
+  typingActive = false; typingStart = null;
+}
+
+function startTypingTimer() {
+  if (!typingStart) {
+    typingStart = Date.now();
+    typingTimer = setInterval(() => {
+      document.getElementById('ty-time').textContent = ((Date.now()-typingStart)/1000).toFixed(1);
+    }, 100);
+  }
+}
+
+function handleTyping(inp) {
+  startTypingTimer();
+  const typed = inp.value;
+  const spans = document.querySelectorAll('#ty-disp .char');
+  let correct = 0;
+  spans.forEach((s, i) => {
+    s.className = 'char';
+    if (i < typed.length) {
+      if (typed[i] === (typingText[i]||'')) { s.classList.add('ok'); correct++; }
+      else s.classList.add('err2');
+    } else if (i === typed.length) s.classList.add('cur');
+  });
+  const acc = typed.length ? Math.round(correct/typed.length*100) : 100;
+  document.getElementById('ty-acc').textContent = acc;
+  const secs = (Date.now()-typingStart)/1000;
+  const wpm = secs>0 ? Math.round((typed.length/5)/(secs/60)) : 0;
+  document.getElementById('ty-wpm').textContent = wpm;
+
+  if (typed === typingText) {
+    clearInterval(typingTimer);
+    inp.disabled = true;
+    const pts = Math.round(100 * (acc/100) * Math.min(1, 10/secs));
+    document.getElementById('ty-res').textContent = `✅ ${secs.toFixed(1)}с · ${wpm} WPM · +${pts} ұпай`;
+    addGameScore(pts);
+  }
+}
+
+// --- GAME 3: Drag Drop ---
+const dragData = [
+  {chip:"SELECT",blank:"SQL-де деректерді ___ арқылы таңдаймыз"},
+  {chip:"import",blank:"Модульді ___ кілт сөзімен жүктейміз"},
+  {chip:"matrix[i][j]",blank:"2D массив элементіне ___ арқылы қол жеткіземіз"},
+  {chip:"randint",blank:"Кездейсоқ бүтін сан: random.___()"}
+];
+let dragAnswers = {};
+let dragDraggedChip = null;
+
+function initDrag() {
+  dragAnswers = {};
+  document.getElementById('drag-res').textContent = '';
+  const chips = document.getElementById('drag-chips');
+  const zones = document.getElementById('drop-zones');
+  const shuffled = [...dragData].sort(() => Math.random()-.5);
+  chips.innerHTML = shuffled.map((d,i) => `<div class="drag-chip" draggable="true" id="chip${i}" data-val="${d.chip}" ondragstart="dragDragStart(this)">${d.chip}</div>`).join('');
+  zones.innerHTML = dragData.map((d,i) => `
+    <div class="drop-zone" id="zone${i}" data-ans="${d.chip}"
+      ondragover="event.preventDefault();this.classList.add('over')"
+      ondragleave="this.classList.remove('over')"
+      ondrop="dropChip(this,${i})">
+      ${d.blank.replace('___','<span style="color:var(--p);font-weight:900">___</span>')}
+    </div>`).join('');
+}
+
+function dragDragStart(el) { dragDraggedChip = el; }
+
+function dropChip(zone, zoneIdx) {
+  zone.classList.remove('over');
+  if (!dragDraggedChip) return;
+  const val = dragDraggedChip.dataset.val;
+  // Remove previous chip from this zone
+  const prev = zone.querySelector('.dropped-chip');
+  if (prev) {
+    const prevVal = prev.dataset.val;
+    // Return chip
+    document.querySelectorAll('.drag-chip').forEach(c => { if(c.dataset.val===prevVal) c.classList.remove('used'); });
+    prev.remove();
+    delete dragAnswers[zoneIdx];
+  }
+  dragDraggedChip.classList.add('used');
+  dragAnswers[zoneIdx] = val;
+  const dropped = document.createElement('div');
+  dropped.className = 'dropped-chip';
+  dropped.dataset.val = val;
+  dropped.textContent = val;
+  dropped.onclick = () => { dropped.remove(); dragDraggedChip.classList.remove('used'); delete dragAnswers[zoneIdx]; zone.classList.remove('filled'); };
+  zone.appendChild(dropped);
+  zone.classList.add('filled');
+}
+
+function checkDrag() {
+  let correct = 0;
+  document.querySelectorAll('.drop-zone').forEach((z, i) => {
+    if (dragAnswers[i] === z.dataset.ans) correct++;
+  });
+  const pts = correct * 20;
+  document.getElementById('drag-res').innerHTML = `<span style="color:${correct===dragData.length?'var(--ok)':'var(--err)'}">${correct}/${dragData.length} дұрыс · +${pts} ұпай</span>`;
+  addGameScore(pts);
+}
+
+// --- GAME 4: Quick Quiz ---
+const qqAll = [];
+topics.forEach(t => t.test.forEach(q => qqAll.push({...q, topic:t.title})));
+let qqIdx = 0, qqScore = 0, qqTimer = null, qqActive = false;
+
+function initQQ() {
+  qqIdx = 0; qqScore = 0; qqActive = true;
+  document.getElementById('qq-sc').textContent = 0;
+  nextQQ();
+}
+
+function nextQQ() {
+  if (qqIdx >= 10) { endQQ(); return; }
+  clearTimeout(qqTimer);
+  const pool = qqAll.sort(() => Math.random()-.5);
+  const q = pool[qqIdx % pool.length];
+  document.getElementById('qq-num').textContent = qqIdx+1;
+  document.getElementById('qq-q').textContent = q.q;
+  const opts = document.getElementById('qq-opts');
+  opts.innerHTML = q.opts.map((o, i) => `<button class="qq-opt" onclick="answerQQ(this,${i},${q.a})">${o}</button>`).join('');
+  let timeLeft = 150;
+  document.getElementById('qq-bar').style.width = '100%';
+  qqTimer = setInterval(() => {
+    timeLeft--;
+    document.getElementById('qq-bar').style.width = (timeLeft/150*100) + '%';
+    if (timeLeft <= 0) { clearInterval(qqTimer); qqIdx++; setTimeout(nextQQ, 500); }
+  }, 100);
+}
+
+function answerQQ(btn, sel, correct) {
+  clearInterval(qqTimer);
+  document.querySelectorAll('.qq-opt').forEach(b => b.disabled = true);
+  if (sel === correct) {
+    btn.classList.add('correct');
+    qqScore += 10;
+    document.getElementById('qq-sc').textContent = qqScore;
+    gameStreak++;
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.qq-opt')[correct].classList.add('correct');
+    gameStreak = 0;
+  }
+  qqIdx++;
+  setTimeout(nextQQ, 1200);
+}
+
+function endQQ() {
+  document.getElementById('qq-q').textContent = `🎉 Тест аяқталды! Ұпайыңыз: ${qqScore}/100`;
+  document.getElementById('qq-opts').innerHTML = `<button class="btn btn-p btn-sm" onclick="initQQ()" style="grid-column:span 2"><i class="fas fa-redo"></i> Қайта ойна</button>`;
+  addGameScore(qqScore);
+}
+
+// --- GAME 5: Memory ---
+const memEmojis = ['🖥️','🐍','📊','🔒','🌐','💾','🎨','⚡'];
+let memFlipped = [], memMatched = [], memMoves = 0, memLocked = false;
+
+function initMemory() {
+  memFlipped = []; memMatched = []; memMoves = 0; memLocked = false;
+  document.getElementById('mem-moves').textContent = 0;
+  document.getElementById('mem-found').textContent = '0';
+  document.getElementById('mem-res').textContent = '';
+  const cards = [...memEmojis,...memEmojis].sort(() => Math.random()-.5);
+  document.getElementById('mem-grid').innerHTML = cards.map((e,i) => `
+    <div class="mem-card" id="mc${i}" data-val="${e}" onclick="flipMem(${i})">
+      <div class="mem-front"><i class="fas fa-question"></i></div>
+      <div class="mem-back">${e}</div>
+    </div>`).join('');
+}
+
+function flipMem(i) {
+  if (memLocked) return;
+  const card = document.getElementById('mc'+i);
+  if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  card.classList.add('flipped');
+  memFlipped.push(i);
+  if (memFlipped.length === 2) {
+    memLocked = true; memMoves++;
+    document.getElementById('mem-moves').textContent = memMoves;
+    const [a,b] = memFlipped;
+    const ca = document.getElementById('mc'+a);
+    const cb = document.getElementById('mc'+b);
+    if (ca.dataset.val === cb.dataset.val) {
+      ca.classList.add('matched'); cb.classList.add('matched');
+      memMatched.push(a,b);
+      memFlipped = []; memLocked = false;
+      const found = memMatched.length/2;
+      document.getElementById('mem-found').textContent = found;
+      if (found === memEmojis.length) {
+        const pts = Math.max(10, 100-memMoves*3);
+        document.getElementById('mem-res').innerHTML = `🎉 +${pts} ұпай!`;
+        addGameScore(pts);
+      }
+    } else {
+      setTimeout(() => {
+        ca.classList.remove('flipped'); cb.classList.remove('flipped');
+        memFlipped = []; memLocked = false;
+      }, 900);
+    }
+  }
+}
+
+// --- GAME 6: Word Search ---
+const wsWords = ['MATRIX','PYTHON','SQL','VIRUS','NETWORK','SORT','PIXEL'];
+let wsSelected = [], wsFoundWords = [];
+
+function initWordSearch() {
+  wsSelected = []; wsFoundWords = [];
+  document.getElementById('ws-res').textContent = '';
+  const size = 10;
+  const grid = Array.from({length:size}, () => Array(size).fill(''));
+  
+  // Place words
+  const placed = [];
+  wsWords.forEach(word => {
+    for (let attempt = 0; attempt < 50; attempt++) {
+      const dir = Math.floor(Math.random()*2); // 0=horiz, 1=vert
+      const r = Math.floor(Math.random()*(dir?size-word.length:size));
+      const c = Math.floor(Math.random()*(dir?size:size-word.length));
+      let ok = true;
+      for (let k = 0; k < word.length; k++) {
+        const nr = dir ? r+k : r;
+        const nc = dir ? c : c+k;
+        if (grid[nr][nc] && grid[nr][nc] !== word[k]) { ok=false; break; }
+      }
+      if (ok) {
+        for (let k = 0; k < word.length; k++) {
+          grid[dir?r+k:r][dir?c:c+k] = word[k];
+        }
+        placed.push({word, r, c, dir});
+        break;
+      }
+    }
+  });
+  
+  // Fill blanks
+  const letters = 'ABCDEFGHIJKLMNOPRSTUVWXYZ';
+  for (let r=0;r<size;r++) for(let c=0;c<size;c++) if (!grid[r][c]) grid[r][c] = letters[Math.floor(Math.random()*letters.length)];
+  
+  // Render
+  document.getElementById('ws-words').innerHTML = wsWords.map(w => `<span id="ww-${w}" style="padding:5px 12px;border-radius:20px;background:#f1f5f9;font-size:12px;font-weight:800;border:2px solid var(--bd)">${w}</span>`).join('');
+  document.getElementById('ws-grid').innerHTML = grid.map((row,r) => row.map((cell,c) => `<div class="ws-cell" id="wsc-${r}-${c}" data-r="${r}" data-c="${c}" onclick="selectWS(${r},${c})">${cell}</div>`).join('')).join('');
+  
+  // Store placed words for checking
+  window._wsPlaced = placed;
+}
+
+function selectWS(r, c) {
+  const el = document.getElementById(`wsc-${r}-${c}`);
+  const key = `${r}-${c}`;
+  if (wsSelected.some(s => s.key === key)) {
+    el.classList.remove('sel');
+    wsSelected = wsSelected.filter(s => s.key !== key);
+    return;
+  }
+  el.classList.add('sel');
+  wsSelected.push({r,c,key,letter:el.textContent});
+  
+  // Check if selection matches any word
+  const selLetters = wsSelected.map(s=>s.letter).join('');
+  const selLettersRev = [...selLetters].reverse().join('');
+  
+  window._wsPlaced?.forEach(({word,r:wr,c:wc,dir}) => {
+    if ((selLetters===word||selLettersRev===word) && wsSelected.length===word.length) {
+      // Check positions match
+      const match = wsSelected.every(({r:sr,c:sc},i) => {
+        return (dir?wr+i:wr)===sr && (dir?wc:wc+i)===sc;
+      }) || wsSelected.every(({r:sr,c:sc},i) => {
+        const ri = word.length-1-i;
+        return (dir?wr+ri:wr)===sr && (dir?wc:wc+ri)===sc;
+      });
+      if (match && !wsFoundWords.includes(word)) {
+        wsFoundWords.push(word);
+        wsSelected.forEach(s => { document.getElementById(`wsc-${s.r}-${s.c}`).classList.replace('sel','found'); });
+        wsSelected = [];
+        document.getElementById(`ww-${word}`).style.cssText = 'padding:5px 12px;border-radius:20px;background:#dcfce7;font-size:12px;font-weight:800;border:2px solid #22c55e;color:#16a34a;text-decoration:line-through';
+        if (wsFoundWords.length === wsWords.length) {
+          document.getElementById('ws-res').textContent = '🎉 Барлық сөздер табылды!';
+          addGameScore(80);
+        }
+      }
+    }
+  });
+}
+
+// --- GAME 7: True/False ---
+const tfQuestions = [
+  {q:"Python-да массив индексі 0-ден басталады.",a:true},
+  {q:"SQL-де SELECT командасы деректерді жою үшін қолданылады.",a:false},
+  {q:"LAN желісі бүкіл қалаға қызмет етеді.",a:false},
+  {q:"Бинарлық іздеу кез келген тізімде жұмыс істейді.",a:false},
+  {q:"RGB моделі экран үшін, CMYK баспа үшін.",a:true},
+  {q:"Фишинг — жалған сайттар арқылы деректер ұрлау.",a:true},
+  {q:"Bubble Sort-тың уақыт күрделілігі O(n log n).",a:false},
+  {q:"math.sqrt(25) нәтижесі 5.0.",a:true},
+  {q:"Матрица — бір өлшемді массив.",a:false},
+  {q:"DNS домен атауын IP мекенжайына аударады.",a:true},
+  {q:"Python-да import кілт сөзі модульді жүктейді.",a:true},
+  {q:"Векторлық графика ұлғайтқанда сапасы жоғалады.",a:false}
+];
+let tfIdx = 0, tfScore = 0;
+
+function initTF() {
+  tfIdx = 0; tfScore = 0;
+  document.getElementById('tf-sc').textContent = 0;
+  nextTF();
+}
+
+function nextTF() {
+  if (tfIdx >= tfQuestions.length) {
+    document.getElementById('tf-q').textContent = `🎉 Аяқталды! Ұпай: ${tfScore}/${tfQuestions.length*10}`;
+    document.querySelectorAll('[onclick^="answerTF"]').forEach(b => b.disabled = true);
+    addGameScore(tfScore);
+    return;
+  }
+  document.getElementById('tf-q').textContent = tfQuestions[tfIdx].q;
+  document.getElementById('tf-num').textContent = tfIdx+1;
+  document.getElementById('tf-fb').textContent = '';
+}
+
+function answerTF(ans) {
+  if (tfIdx >= tfQuestions.length) return;
+  const correct = tfQuestions[tfIdx].a === ans;
+  const fb = document.getElementById('tf-fb');
+  if (correct) {
+    fb.innerHTML = '<span style="color:var(--ok)">✅ Дұрыс! +10 ұпай</span>';
+    tfScore += 10;
+    gameStreak++;
+  } else {
+    fb.innerHTML = `<span style="color:var(--err)">❌ Қате! Дұрыс жауап: ${tfQuestions[tfIdx].a?'ДҰРЫС':'БҰРЫС'}</span>`;
+    gameStreak = 0;
+  }
+  document.getElementById('tf-sc').textContent = tfScore;
+  tfIdx++;
+  setTimeout(nextTF, 1200);
+}
+
+function addGameScore(pts) {
+  gameScore += pts;
+  totalScore += Math.round(pts*0.3);
+  updateScoreDisplay();
+}
+
+// ============================================================
+// CHATBOT
+// ============================================================
+let chatInited = false;
+
+const botKnowledge = {
+  "массив": "📦 **Массив** — бір типтегі элементтер жиынтығы. Python-да: `arr = [1, 2, 3, 4, 5]`. Екі өлшемді массив (матрица): `matrix = [[1,2],[3,4]]`.",
+  "матрица": "🔢 **Матрица** — екі өлшемді массив. Python-да кірістірілген тізім ретінде беріледі. Мысалы: `A = [[1,2,3],[4,5,6]]`. Элементке қол жеткізу: `A[жол][баған]`.",
+  "python": "🐍 **Python** — жоғары деңгейлі, оқуға ыңғайлы бағдарламалау тілі. Ғылым, AI, веб-дамытуда кеңінен қолданылады. Версия: Python 3.x.",
+  "цикл": "🔄 **Цикл** Python-да:\n• `for i in range(10):` — 10 рет қайталайды\n• `while условие:` — шарт орындалғанда қайталайды\n• Кірістірілген циклдер матрица үшін қолданылады.",
+  "for": "🔄 **For цикл** мысалы:\n```python\nfor i in range(5):\n    print(i)  # 0,1,2,3,4\n```\nТізімді аралау: `for x in arr: print(x)`",
+  "while": "🔄 **While цикл**:\n```python\ni = 0\nwhile i < 5:\n    print(i)\n    i += 1\n```",
+  "функция": "⚡ **Функция** Python-да `def` кілт сөзімен жазылады:\n```python\ndef greet(name):\n    return 'Сәлем, ' + name\n\nprint(greet('Айдар'))  # Сәлем, Айдар\n```",
+  "sql": "🗄️ **SQL** — Structured Query Language. Дерекқормен жұмыс үшін:\n• `SELECT * FROM table` — таңдау\n• `INSERT INTO table VALUES(...)` — қосу\n• `UPDATE table SET ... WHERE ...` — өзгерту\n• `DELETE FROM table WHERE ...` — жою",
+  "дерекқор": "💾 **Дерекқор** — ұйымдасқан мәліметтер жиынтығы. Негізгі ұғымдар: Кесте (Table), Өріс (Field), Жазба (Record), Кілт (Primary Key). Танымал ДҚБЖ: MySQL, SQLite, PostgreSQL.",
+  "желі": "🌐 **Компьютерлік желі** түрлері:\n• **LAN** — жергілікті желі (мектеп, кеңсе)\n• **MAN** — қалалық желі\n• **WAN** — ғаламдық желі (интернет)\n\nТопологиялар: Жұлдыз ⭐, Шина ➖, Сақина 🔄",
+  "топология": "🌐 **Желі топологиялары:**\n• **Жұлдыз** — барлығы орталық хабқа қосылады\n• **Шина** — бір сым бойынша тізбектелген\n• **Сақина** — тұйық сақина, деректер айналады",
+  "қауіпсіздік": "🔒 **Ақпараттық қауіпсіздік** — деректерді қорғау. Кибер қауіптер:\n• 🦠 Вирус — файлдарды бұзады\n• 🐴 Троян — жасырын зиян\n• 🎣 Фишинг — деректер ұрлау\n• 🔒 Ransomware — шифрлеп ақша талап ету\n\n✅ Қорғаныс: антивирус, күшті пароль, 2FA.",
+  "вирус": "🦠 **Компьютерлік вирус** — өзін-өзі көбейтетін, файлдарды бұзатын бағдарлама. Қорғаныс: антивирустық бағдарлама орнатыңыз, бағдарламаларды жаңартып отырыңыз.",
+  "фишинг": "🎣 **Фишинг** — жалған сайттар немесе хабарламалар арқылы жеке деректерді (пароль, карта нөмірі) ұрлау. Белгілері: жалған URL, асығыс сұраныс, грамматикалық қателер.",
+  "іздеу": "🔍 **Іздеу алгоритмдері:**\n• **Сызықтық O(n)** — бірінен соң бірін тексереді, кез келген тізімде жұмыс істейді\n• **Бинарлық O(log n)** — ортасынан бөліп іздейді, тек реттелген тізімде!",
+  "бинарлық іздеу": "🎯 **Бинарлық іздеу** — реттелген тізімді ортасынан бөліп іздейді:\n```python\ndef binary(arr, x):\n    l, r = 0, len(arr)-1\n    while l <= r:\n        m = (l+r)//2\n        if arr[m] == x: return m\n        elif arr[m] < x: l = m+1\n        else: r = m-1\n    return -1\n```\nКүрделілік: O(log n) 🚀",
+  "сұрыптау": "📊 **Сұрыптау алгоритмдері:**\n• **Bubble Sort O(n²)** — жанасатын элементтерді ауыстырады\n• **Selection Sort O(n²)** — ең кішісін тауып орналастырады\n• **Merge Sort O(n log n)** — тиімдірек, бөліп-жеңу принципі",
+  "bubble sort": "🫧 **Bubble Sort** (Көпіршік сұрыптауы):\n```python\ndef bubble(arr):\n    for i in range(len(arr)):\n        for j in range(len(arr)-i-1):\n            if arr[j] > arr[j+1]:\n                arr[j], arr[j+1] = arr[j+1], arr[j]\n    return arr\n```\nUақыт күрделілігі: O(n²)",
+  "растр": "🖼️ **Растрлық графика** — пиксельдер жиынтығы:\n• Форматтар: JPEG, PNG, BMP, GIF\n• Бағдарламалар: Photoshop, GIMP\n• ⚠️ Ұлғайтқанда сапа жоғалады\n\n**Векторлық графика** — математикалық формулалар:\n• Форматтар: SVG, AI, EPS\n• Кез келген өлшемде сапа сақталады!",
+  "rgb": "🎨 **Түс модельдері:**\n• **RGB** (Red, Green, Blue) — экран үшін. Мысалы: қызыл = (255, 0, 0)\n• **CMYK** (Cyan, Magenta, Yellow, Key) — баспа үшін\n• **HSL** (Hue, Saturation, Lightness) — дизайн үшін",
+  "math": "🔢 **math модулі:**\n```python\nimport math\nmath.sqrt(16)  # 4.0\nmath.pi        # 3.14159...\nmath.pow(2,10) # 1024.0\nmath.floor(3.7)# 3\nmath.ceil(3.2) # 4\n```",
+  "random": "🎲 **random модулі:**\n```python\nimport random\nrandom.randint(1, 100)  # 1-100 бүтін сан\nrandom.random()          # 0.0-1.0 ондық\nrandom.choice([1,2,3])  # тізімнен таңдау\nrandom.shuffle(lst)     # тізімді шайқайды\n```",
+  "import": "📦 **import** — модуль жүктеу кілт сөзі:\n```python\nimport math           # толық модуль\nfrom math import sqrt # тек sqrt функциясы\nimport random as r    # бүркеншік атпен\n```",
+  "пароль": "🔑 **Күшті пароль ережелері:**\n• Кем дегенде 12 символ\n• Бас және кіші әріптер\n• Сандар (0-9)\n• Арнайы белгілер (!@#$%)\n• Мысалы: `Xk$9mP@2z!Qr`\n• Әр сайтқа бөлек пароль!",
+};
+
+function initChat() {
+  if (chatInited) return;
+  chatInited = true;
+  const msgs = document.getElementById('chat-msgs');
+  msgs.innerHTML = '';
+  addBotMsg("Сәлем! 👋 Мен InfoBot — сіздің информатика пәніндегі AI көмекшіңізмін!\n\nМаған информатика, Python, алгоритмдер, дерекқор туралы кез келген сұрақ қойыңыз. Ниет байлаңыз! 🚀");
+}
+
+function addBotMsg(text) {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = `<div class="mav">🤖</div><div class="mbubble">${text.replace(/\n/g,'<br>').replace(/```python([\s\S]*?)```/g,'<code style="display:block;background:#0f172a;color:#86efac;border-radius:8px;padding:10px;margin-top:6px;font-family:JetBrains Mono,monospace;font-size:12px;white-space:pre">$1</code>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.innerHTML = `<div class="mav" style="background:#e5e7eb">👤</div><div class="mbubble">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTypingIndicator() {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.id = 'typing-ind';
+  div.innerHTML = `<div class="mav">🤖</div><div class="typing-dots"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function getBotResponse(msg) {
+  const lower = msg.toLowerCase();
+  for (const [key, response] of Object.entries(botKnowledge)) {
+    if (lower.includes(key)) return response;
+  }
+  if (lower.includes('сәлем') || lower.includes('салем') || lower.includes('hello')) return "Сәлем! 😊 Қалайсыз? Информатика бойынша қандай сұрағыңыз бар?";
+  if (lower.includes('рахмет') || lower.includes('спасибо')) return "Тамаша! 🌟 Тағы да сұрақтарыңыз болса, міндетті түрде сұраңыз! Оқуда табыс тілеймін! 🚀";
+  if (lower.includes('кім') || lower.includes('сен')) return "Мен — InfoBot! 🤖 Информатика пәніне арнайы жасалған AI көмекші. Бағдарламалау, алгоритмдер, дерекқор — осының бәрін түсіндіре аламын!";
+  if (lower.includes('тест') || lower.includes('баға')) return "Тест тапсыру үшін тақырып бетіне өтіп, **«Тест»** қойындысын ашыңыз. Сұрақтарға жауап беріп, **«Тексеру»** батырмасын басыңыз. 🎯 Сәттілік!";
+  return "🤔 Сұрағыңызды дәлірек жазыңыз. Мысалы: **массив**, **SQL**, **бинарлық іздеу**, **bubble sort**, **желі**, **фишинг** туралы сұраңыз — кез келгенін түсіндіремін!";
+}
+
+function sendMsg() {
+  const inp = document.getElementById('chat-inp');
+  const text = inp.value.trim();
+  if (!text) return;
+  addUserMsg(text);
+  inp.value = '';
+  showTypingIndicator();
+  setTimeout(() => {
+    document.getElementById('typing-ind')?.remove();
+    addBotMsg(getBotResponse(text));
+  }, 800 + Math.random()*600);
+}
+
+function sendQR(btn) {
+  document.getElementById('chat-inp').value = btn.textContent;
+  sendMsg();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function initGames() {
+  initMatch();
+  initTyping();
+  initDrag();
+  initQQ();
+  initMemory();
+  initWordSearch();
+  initTF();
+}
+
+window.onload = function() {
+  initGames();
+  updateScoreDisplay();
+  initChat();
+};
+</script>
+</body>
+</html>
